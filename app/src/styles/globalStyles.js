@@ -1,6 +1,7 @@
 
 const primaryColor = '#442B82';
-const backgroundColor = '#F8FAFC'
+const backgroundColor = '#F8FAFC';
+const whiteColor = '#F8FAFC';
 const secondaryColor = '#EAD8FF';
 const textColor = '#442B82';
 
@@ -15,6 +16,7 @@ const globalStyles = {
   // Colors
   primaryColor,
   secondaryColor,
+  backgroundColor,
   textColor,
   
   // Typography
@@ -56,6 +58,7 @@ const globalStyles = {
     margin: 10,
   },
 
+
   buttonLabel: {
     color: backgroundColor,
     fontFamily,
@@ -63,7 +66,6 @@ const globalStyles = {
     textAlign: 'center',
   },
 
-  
   // Forms
   input: {
     fontFamily,
@@ -137,8 +139,16 @@ const globalStyles = {
     maxWidth: 200,
     height: 200,
     aspectRatio: 1,
-    marginBottom: 40
-  }
+    marginBottom: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  // Containers
+  keyboardAvoidingContainer: {
+    alignItems: 'center',
+  },
+
 };
 
 export default globalStyles;
