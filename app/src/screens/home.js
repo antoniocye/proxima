@@ -13,6 +13,7 @@ export default function HomeScreen({ navigation , onLayoutRootView}) {
           <Text style={globalStyles.text}>experiment with ultra-custom designed user experiences that can enable new levels of customer satisfaction</Text>
           <AnimatedButton title="details" onPress={() => navigation.navigate('Details')} />
           <AnimatedButton title="login" onPress={() => navigation.navigate('Login')} />
+          <AnimatedButton title="sign up" onPress={() => navigation.navigate('Sign Up')} />
         </View>
       </ImageBackground>
 

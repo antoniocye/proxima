@@ -35,6 +35,7 @@ const globalStyles = {
       color: textColor,
       fontFamily: boldFontFamily,
       fontSize: 54,
+      textAlign: 'center',
   },
   
   // Spacing

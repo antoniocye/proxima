@@ -9,6 +9,7 @@ import DetailsScreen from './src/screens/details';
 import LoginScreen from './src/screens/login';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen'; 
+import SignupScreen from './src/screens/signup.js';
 
 
 const Stack = createNativeStackNavigator();
@@ -54,6 +55,7 @@ function App() {
         <Stack.Screen name="Home" component={HomeScreen} options={onLayoutRootView}/>
         <Stack.Screen name="Details" component={DetailsScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Sign Up" component={SignupScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
