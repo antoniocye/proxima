@@ -27,17 +27,6 @@ export default function PingDeclinedScreen({ route, navigation }) {
     getMatchInfo();
   }, []);
 
-  
-
-
-  // TODO: get match info
-  async function getMatchInfo() {
-    result = waitForThreeSeconds();
-
-  }
-
-  matchInfo = getMatchInfo();
-
   return (
     <ImageBackground source={require('../../../assets/img/background.png')} style={globalStyles.backgroundImage}>
       <SafeAreaView style={globalStyles.container}>

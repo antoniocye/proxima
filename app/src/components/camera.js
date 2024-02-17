@@ -29,7 +29,6 @@ export default function CameraView({ afterPhotoTaken }) {
         afterPhotoTaken();
       });
     }
-    
   }
 
   const cameraRef = useRef(null);

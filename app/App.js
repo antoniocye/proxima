@@ -26,6 +26,7 @@ import PingDeclinedScreen from './src/screens/ping/pingDeclined';
 import PingVerificationScreen from './src/screens/ping/pingVerification';
 import PingResultScreen from './src/screens/ping/pingResult';
 import PingWaitingScreen from './src/screens/ping/pingWaiting';
+import AwaitingVerificationScreen from './src/screens/ping/awaitingVerification';
 
 
 const Stack = createNativeStackNavigator();
@@ -80,6 +81,7 @@ function App() {
         <Stack.Screen name="Ping Verification" component={PingVerificationScreen} />
         <Stack.Screen name="Ping Waiting" component={PingWaitingScreen} />
         <Stack.Screen name="Ping Result" component={PingResultScreen} />
+        <Stack.Screen name="Awaiting Verification" component={AwaitingVerificationScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
