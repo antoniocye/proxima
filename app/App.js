@@ -1,16 +1,24 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
+import HomeScreen from './src/screens/home';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import DetailsScreen from './src/screens/details';  
 
-export default function App() {
+
+const Stack = createNativeStackNavigator();
+
+/*
+ * Only add navigation points to this file, handle navigation in the files themselves
+ */
+
+function App() {
   return (
     <NavigationContainer>
-
-      
-      <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen}/>
+        <Stack.Screen name="Details" component={DetailsScreen} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
@@ -23,3 +31,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export default App;
