@@ -1,14 +1,21 @@
 import React from 'react';
-import { View, Button, Text } from 'react-native';
+import { View, Button, Text, Pressable, ImageBackground } from 'react-native';
+import globalStyles from '../styles/globalStyles';
+import CustomButton from '../components/button';
+import AnimatedButton from '../components/button';
 
 export default function HomeScreen({ navigation }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen</Text>
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('Details')}
-      />
+    <View style={globalStyles.backgroundImage}>
+      <ImageBackground source={require('../../assets/img/background.png')} style={globalStyles.backgroundImage}>
+        <View style={globalStyles.container}>
+          <Text style={globalStyles.heading}>pick a page</Text>
+          <Text style={globalStyles.text}>experiment with ultra-custom designed user experiences that can enable new levels of customer satisfaction</Text>
+          <AnimatedButton title="details" onPress={() => navigation.navigate('Details')} />
+          <AnimatedButton title="login" onPress={() => navigation.navigate('Login')} />
+        </View>
+      </ImageBackground>
+
     </View>
   );
 }
