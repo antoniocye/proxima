@@ -1,31 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { SafeAreaView, Text, Image, ImageBackground, KeyboardAvoidingView, Platform, ActivityIndicator} from 'react-native';
 import globalStyles from '../styles/globalStyles';
-import AnimatedButton from '../components/button';
-import TextField from '../components/textfield';
+import { auth } from '../../database/Init';
 export default function AwaitingVerificationScreen({ navigation }) {
   
-  // placeholder function
-  async function waitForThreeSeconds() {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        resolve();
-      }, 3000); // 3000 milliseconds = 3 seconds
-    });
-  }
-
   const [isLoading, setIsLoading] = useState(true);
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    const wait = async () => {
-      const result = await waitForThreeSeconds();
-      setMessage(result);
-      setIsLoading(false);
-    };
-
-    wait();
-    navigation.navigate('Home');
+    if(auth && auth.currentUser && auth.currentUser.emailVerified === true){
+      navigation.navigate("Home");
+    }
   }, []);
 
   return (

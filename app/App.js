@@ -25,7 +25,7 @@ import PingDeclinedScreen from './src/screens/ping/pingDeclined';
 import PingVerificationScreen from './src/screens/ping/pingVerification';
 import PingResultScreen from './src/screens/ping/pingResult';
 import PingWaitingScreen from './src/screens/ping/pingWaiting';
-import AwaitingVerificationScreen from './src/screens/ping/awaitingVerification';
+import AwaitingVerificationScreen from './src/screens/awaitingVerification';
 
 
 const Stack = createNativeStackNavigator();
@@ -37,7 +37,7 @@ SplashScreen.preventAutoHideAsync(); // prevent the splash screen from auto-hidi
  * Only add navigation points to this file, handle navigation in the files themselves
  */
 
-const GlobalUser = createContext();
+export const GlobalUser = createContext();
 
 
 function App() {
@@ -66,7 +66,7 @@ function App() {
 
   return (
 
-    <GlobalUser.Provider value={{ myUser, setMyUser }}>
+    <GlobalUser.Provider value={[ myUser, setMyUser ] }>
     {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
