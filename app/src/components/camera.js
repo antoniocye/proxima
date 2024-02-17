@@ -1,20 +1,16 @@
 import { Camera, CameraType } from 'expo-camera';
-import { useState } from 'react';
-import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useState, useRef} from 'react';
+import { Button, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator} from 'react-native';
 import globalStyles from '../styles/globalStyles';
 import { MaterialIcons } from '@expo/vector-icons';
 import AnimatedButton from './button';
+import cameraStyles from '../styles/cameraStyles';
 
 export default function CameraView() {
   const [type, setType] = useState(CameraType.front);
   const [permission, requestPermission] = Camera.useCameraPermissions();
 
-  if (!permission) {
-    // Camera permissions are still loading
-    return <View />;
-  }
-
-  if (!permission.granted) {
+  if (permission && !permission.granted) {
     // Camera permissions are not granted yet
     return (
       <View style={styles.container}>
@@ -24,50 +20,37 @@ export default function CameraView() {
     );
   }
 
+  function takePicture() {
+    if (cameraRef.current) {
+      cameraRef.current.takePictureAsync().then((photo) => {
+        // Save the photo to a file or process it further
+        console.log('Photo taken:', photo);
+      });
+    }
+  }
+
+  const cameraRef = useRef(null);
+  
   function toggleCameraType() {
     setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
   }
 
-
   return (
-    <View style={styles.container}>
-      <Camera style={styles.camera} type={type}>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
-            <MaterialIcons name="flip-camera-ios" size={24} color={globalStyles.primaryColor} />
+    <View style={cameraStyles.container}>
+      {!permission && (<><View style={cameraStyles.container}><ActivityIndicator size="large" /></View></>)}
+      {permission && !permission.granted && (<><View style={cameraStyles.container}>
+        <Text style={{ textAlign: 'center' }}>We need your permission to show the camera</Text>
+        <Button onPress={requestPermission} title="grant permission" />
+      </View></>)}
+      {permission && permission.granted && (<><Camera ref={cameraRef} style={cameraStyles.camera} type={type}>
+        <View style={cameraStyles.buttonContainer}>
+          <TouchableOpacity style={cameraStyles.button} onPress={toggleCameraType}>
+            <MaterialIcons name="flip-camera-ios" size={24} color={globalStyles.backgroundColor} />
           </TouchableOpacity>
         </View>
       </Camera>
-      <AnimatedButton title="confirm" onPress={() => console.log('selfie taken')}/>
+      <AnimatedButton icon="camera-alt" onPress={takePicture} /></>)}
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-  },
-  camera: {
-    flex: 1,
-    minWidth: '90%',
-    maxHeight: 400,
-    borderRadius: 20,
-    overflow: 'hidden',
-    marginVertical: 20,
-    borderWidth: 2,
-    borderColor: globalStyles.primaryColor,
-  },
-  buttonContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: 'transparent',
-    margin: 20,
-  },
-  button: {
-    alignSelf: 'flex-end',
-    alignItems: 'flex-start',
-    backgroundColor:'rgba(255,255,255,0.3)',
-    padding: 20,
-    borderRadius: 10,
-  }
-});

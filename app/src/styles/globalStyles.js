@@ -1,6 +1,7 @@
 
 const primaryColor = '#442B82';
-const backgroundColor = '#F8FAFC'
+const backgroundColor = '#F8FAFC';
+const whiteColor = '#F8FAFC';
 const secondaryColor = '#EAD8FF';
 const textColor = '#442B82';
 
@@ -15,6 +16,7 @@ const globalStyles = {
   // Colors
   primaryColor,
   secondaryColor,
+  backgroundColor,
   textColor,
   
   // Typography
@@ -55,6 +57,7 @@ const globalStyles = {
     justifyContent: 'center',
     margin: 10,
   },
+
 
   buttonLabel: {
     color: backgroundColor,
@@ -139,37 +142,6 @@ const globalStyles = {
     marginBottom: 40,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-
-  photoPicker: {
-    minWidth: '40%',
-    maxWidth: '40%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 2,
-    borderColor: primaryColor,
-    borderRadius: 20,
-    aspectRatio: 1,
-    overflow: 'hidden',
-  },
-
-  photoPickerImage: {
-    width: 200, 
-    height: 200, 
-    resizeMode: "cover",
-  },
-
-  photoPickerText: {
-    color: primaryColor,
-    fontFamily,
-    fontSize: 60,
-    overflow: 'hidden',
-  },
-
-  photoPickerRow: {
-    flexDirection: 'row',
-    gap: '30%',
-    marginVertical: 10,
   },
 
   // Containers

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Animated, Text, TouchableWithoutFeedback } from 'react-native';
 import globalStyles from '../styles/globalStyles';
+import { MaterialIcons } from '@expo/vector-icons';
 
-const AnimatedButton = ({ onPress, title }) => {
+
+const AnimatedButton = ({ onPress, title=null, icon=null}) => {
   const [animation, setAnimation] = useState(new Animated.Value(0));
 
   const backgroundColor = animation.interpolate({
@@ -29,8 +31,9 @@ const AnimatedButton = ({ onPress, title }) => {
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
       onPress={onPress}>
-      <Animated.View style={[globalStyles.button, {backgroundColor}]}>
-        <Text style={globalStyles.buttonLabel}>{title}</Text>
+      <Animated.View style={[globalStyles.button, {backgroundColor}, icon && {maxWidth: 70, minWidth: 70}]}>
+        {title && <Text style={globalStyles.buttonLabel}>{title}</Text>}
+        {icon && <MaterialIcons name={icon} size={30} color={globalStyles.backgroundColor} />}
       </Animated.View>
     </TouchableWithoutFeedback>
   );

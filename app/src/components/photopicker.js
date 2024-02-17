@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Image, View, Text, Pressable } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import globalStyles from '../styles/globalStyles';
+import photoPickerStyles from '../styles/photoPickerStyles';
 
 export default function PhotoPicker() {
   const [image, setImage] = useState(null);
@@ -23,8 +24,8 @@ export default function PhotoPicker() {
   };
 
   return (
-    <Pressable style={[globalStyles.photoPicker]} onPress={pickImage}>
-      {image ? <Image source={{ uri: image }} style={globalStyles.photoPickerImage} /> : <Text style={globalStyles.photoPickerText}>+</Text>}
+    <Pressable style={[photoPickerStyles.photoPicker]} onPress={pickImage}>
+      {image ? <Image source={{ uri: image }} style={photoPickerStyles.photoPickerImage} /> : <Text style={photoPickerStyles.photoPickerText}>+</Text>}
     </Pressable>
   );
 }
