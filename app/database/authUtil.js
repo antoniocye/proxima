@@ -1,3 +1,5 @@
+import { Alert } from 'react-native';
+
 // validate email and password
 export function isValidEmail(email) {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -14,3 +16,9 @@ export function notEmpty(email, password) {
     return email && password && email.trim() !== "" && password.trim() !== "" && password.length > 5;
 }
   
+
+// create alert error for login and sign up errors
+export const createAlert = (errorTitle, errorInfo, callback) =>
+Alert.alert(errorTitle, errorInfo, [
+  {text: 'Try again', onPress: callback } ,
+]);

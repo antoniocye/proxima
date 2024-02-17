@@ -1,11 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Text, ImageBackground, Image, SafeAreaView, Alert, ActivityIndicator } from 'react-native';
+import { Text, ImageBackground, Image, SafeAreaView, ActivityIndicator } from 'react-native';
 import globalStyles from '../styles/globalStyles';
 import AnimatedButton from '../components/button';
 import TextField from '../components/textfield';
 import PasswordField from '../components/passwordfield';
 import Profile from '../../database/Profile';
-import { isValidEmail, isStanfordEmail, notEmpty } from '../../database/authUtil';
+import { isValidEmail, isStanfordEmail, notEmpty, createAlert } from '../../database/authUtil';
 
 export default function LoginScreen({ navigation }) {
   const [myUser, setMyUser] = useState();
@@ -13,22 +13,9 @@ export default function LoginScreen({ navigation }) {
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
 
-
-  useEffect( () => {    
-      async function initializeProfile () {
-        console.log("Started initializing");
-        result = await myUser.initProfile();
-        console.log("Finished logging in");
-      }
-      initializeProfile();
-  }, [myUser]
-  )
-
-
-  const createAlert = (error) =>
-  Alert.alert('Error loging into your account', error, [
-    {text: 'OK', onPress: () => console.log('OK Pressed')},
-  ]);
+  const logInErrorAlert = () => {
+    createAlert("Oops! An error occured...", "There was a problem logging you in, try again!");
+  }
 
   const attemptLogin = async () => {
 
@@ -48,19 +35,19 @@ export default function LoginScreen({ navigation }) {
           }
           else{
             setLoading(false);
-            createAlert("Something weird happened");
+            logInErrorAlert();
           }
         }
         else{
-          createAlert("We only accept Stanford emails.");
+          logInErrorAlert();
         }
       }
       else{
-        createAlert("Please provide a valid email");
+        logInErrorAlert();
       }
     }
     else{
-      createAlert("Empty password or email");
+      logInErrorAlert();
     }
   }
 

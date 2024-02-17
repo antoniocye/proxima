@@ -1,6 +1,6 @@
-import { auth, db, initialized, init, user } from './Init.js'
+import { auth, db, user } from './Init.js'
 import { get, ref, set } from 'firebase/database'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, signOut } from 'firebase/auth'
 
 export default class Profile{
     // _biographical info
@@ -40,6 +40,9 @@ export default class Profile{
             else if(user){
                 return "user-login";
             }
+            else if(flag === "create"){
+                return "user-exists";
+            }
         }
         else if((!flag || flag === "create") && this._password){
             await this.createUser();
@@ -57,7 +60,8 @@ export default class Profile{
         console.log("Creating user. State before creation:");
         console.log(auth, this._email, this._password);
         userCredential = await createUserWithEmailAndPassword(auth, this._email, this._password);
-        const user = userCredential.user;
+        // const user = userCredential.user;
+        await sendEmailVerification(user);
         console.log("Created user");
         console.log(user);
         this._userId = user.uid;
@@ -69,7 +73,8 @@ export default class Profile{
         console.log("Add basic user info to the database")
         console.log("uid", this._uid);
         await this.changeUserPropertyInDatabase({
-            email: this._email
+            email: this._email,
+            isVerified: false
         });
     }
 
