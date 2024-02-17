@@ -1,5 +1,4 @@
-// react
-import React, { useCallback } from 'react';
+import React, { useCallback, useState, createContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -38,9 +37,11 @@ SplashScreen.preventAutoHideAsync(); // prevent the splash screen from auto-hidi
  * Only add navigation points to this file, handle navigation in the files themselves
  */
 
+const GlobalUser = createContext();
 
 
 function App() {
+  const [myUser, setMyUser] = useState();
 
   const [fontsLoaded, fontError] = useFonts({
     'GeneralSans-Medium': require('./assets/fonts/GeneralSans-Medium.otf'),
@@ -62,28 +63,31 @@ function App() {
   }
   
   result = init();
-  user = new Profile({name:"Antonio", email:"antoniokambire@gmail.com", password:"Hello123"});
-  
-  console.log("We have finished profile creation");
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Home" component={HomeScreen} options={onLayoutRootView}/>
-        <Stack.Screen name="Details" component={DetailsScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Sign Up" component={SignupScreen} />
-        <Stack.Screen name="Add Photos" component={AddPhotosScreen} />
-        <Stack.Screen name="Camera" component={SelfieScreen} />
-        <Stack.Screen name="Ping Start" component={PingStartScreen} />
-        <Stack.Screen name="Ping Decision" component={PingDecisionScreen} />
-        <Stack.Screen name="Ping Declined" component={PingDeclinedScreen} />
-        <Stack.Screen name="Ping Verification" component={PingVerificationScreen} />
-        <Stack.Screen name="Ping Waiting" component={PingWaitingScreen} />
-        <Stack.Screen name="Ping Result" component={PingResultScreen} />
-        <Stack.Screen name="Awaiting Verification" component={AwaitingVerificationScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+
+    <GlobalUser.Provider value={{ myUser, setMyUser }}>
+    {
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
+          <Stack.Screen name="Home" component={HomeScreen} options={onLayoutRootView}/>
+          <Stack.Screen name="Details" component={DetailsScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Sign Up" component={SignupScreen} />
+          <Stack.Screen name="Add Photos" component={AddPhotosScreen} />
+          <Stack.Screen name="Camera" component={SelfieScreen} />
+          <Stack.Screen name="Ping Start" component={PingStartScreen} />
+          <Stack.Screen name="Ping Decision" component={PingDecisionScreen} />
+          <Stack.Screen name="Ping Declined" component={PingDeclinedScreen} />
+          <Stack.Screen name="Ping Verification" component={PingVerificationScreen} />
+          <Stack.Screen name="Ping Waiting" component={PingWaitingScreen} />
+          <Stack.Screen name="Ping Result" component={PingResultScreen} />
+          <Stack.Screen name="Awaiting Verification" component={AwaitingVerificationScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    }
+  </GlobalUser.Provider>
+    
   );
 }
 

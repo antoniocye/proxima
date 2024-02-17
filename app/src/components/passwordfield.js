@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TextInput, View, StyleSheet } from 'react-native';
 import globalStyles from '../styles/globalStyles';
 
-const PasswordField = ({ placeholder, onSubmitEditing }) => {
+const PasswordField = ({ placeholder, onSubmitEditing, onChange }) => {
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => setIsFocused(true);
@@ -13,9 +13,11 @@ const PasswordField = ({ placeholder, onSubmitEditing }) => {
             placeholder={placeholder}
             onSubmitEditing={onSubmitEditing}
             onFocus={handleFocus}
+            autoCapitalize='none'
             secureTextEntry={true}
             passwordRules={{ required: 'digit', minlength: '8' }}
             onBlur={handleBlur}
+            onChange={onChange}
             style={[
                 globalStyles.input,
                 {  

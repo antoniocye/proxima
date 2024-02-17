@@ -5,7 +5,8 @@ Dating made easy.
 - Firebase, run as admin, under \app
 `npm install -g firebase-tools`
 `npm install firebase`
-
+- Navigation
+`npm install @react-navigation/native`
 
 ## When adding a page follow these 3 steps
 
