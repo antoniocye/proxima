@@ -65,7 +65,7 @@ export default class Profile{
     }
 
     async loginUser(){
-        console.log("Loging in the user");
+        console.log("Logging in the user");
         signInWithEmailAndPassword(auth, this._email, this._password)
         .then((userCredential) => {
             // Signed in 

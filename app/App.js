@@ -3,29 +3,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { useState, useEffect} from 'react';
 import * as Location from 'expo-location';
-import getPermissions from './Location';
 
-/*
-const start = {
-  latitude: currentLocation.coords.latitude,
-  longitude: currentLocation.coords.longitude
-}
-const end = {
-  latitude: location.coords.latitude,
-  longitude: location.coords.longitude
-}
-
-if (haversine(start, end, {threshold: 1, unit: 'meter'}) == false) {
-  setLocation(currentLocation);
-  console.log("Changed!!!");
-}
-
-- Check altitudes are within __ meters
-- Use haversine to see if database location is different from new location
-- When it changes, check if within __ meters of another person
-*/
 import Profile from './database/Profile.js';
-import { init, auth, db } from './database/Init.js'
+import { init, auth, db, initialized } from './database/Init.js'
 import HomeScreen from './src/screens/home';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import DetailsScreen from './src/screens/details'; 
@@ -38,7 +18,7 @@ const Stack = createNativeStackNavigator();
 
 SplashScreen.preventAutoHideAsync(); // prevent the splash screen from auto-hiding
 
-
+let myUser;
 /*
  * Only add navigation points to this file, handle navigation in the files themselves
  */
@@ -46,6 +26,68 @@ SplashScreen.preventAutoHideAsync(); // prevent the splash screen from auto-hidi
 
 
 function App() {
+  useEffect(() => {
+    if(!initialized){
+      console.log("****************");
+      init();
+      myUser = new Profile({email: "joshsieh@stanford.edu", password: "password123"});
+    }
+    
+  }, [])
+  
+ 
+  const [location, setLocation] = useState();
+  const haversine = require('haversine');``
+  
+  useEffect(() => {
+    const getPermissions = async () => { 
+
+      console.log("in permissions", auth.currentUser);
+      if(myUser != null && auth.currentUser){
+        console.log("Starting location request");
+        let { status } = await Location.requestForegroundPermissionsAsync();
+
+        if (status !== 'granted') {
+          console.log("Please grant location permissions");
+          return;
+        }
+
+        // Get current location and update location
+        let currentLocation = await Location.getCurrentPositionAsync({});
+        setLocation(currentLocation);
+
+        if (myUser._location == undefined) {
+          // Set first location
+          myUser.changeUserPropertyInDatabase({location: location});
+        } else {
+          // Check if location has changed
+          let oldLocation = myUser._location;
+          
+          const start = {
+            latitude: oldLocation.coords.latitude,
+            longitude: oldLocation.coords.longitude
+          }
+
+          const end = {
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude
+          }
+
+          // If more than 1 meter away, update
+          if (!haversine(start, end, {threshold: 1, unit: 'meter'})) {
+            myUser.changeUserPropertyInDatabase({location: location});
+          }
+        }
+      }
+
+//      console.log("Longitude:");
+//      console.log(location.coords.longitude);
+//      console.log("Latitude:");
+//      console.log(location.coords.latitude);
+    };
+
+    getPermissions();
+  }, [location, auth]);
 
   const [fontsLoaded, fontError] = useFonts({
     'GeneralSans-Medium': require('./assets/fonts/GeneralSans-Medium.otf'),
@@ -61,22 +103,6 @@ function App() {
   if (!fontsLoaded && !fontError) {
     return null;
   }
-
-  for(i = 0; i < 5; i++){
-    console.log("----------------------------------------");
-  }
-  
-  result = init();
-  user = new Profile({name:"Antonio", email:"antoniokambire@gmail.com", password:"Hello123"});
-  
-  console.log("We have finished profile creation");
-
-  const [location, setLocation] = useState();
-  const haversine = require('haversine');
-  
-  useEffect(() => {
-      getPermissions(setLocation);
-  }, [location]);
 
   return (
     <NavigationContainer>
