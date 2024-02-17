@@ -11,6 +11,7 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen'; 
 import SignupScreen from './src/screens/signup.js';
 import AddPhotosScreen from './src/screens/addPhotos.js';
+import SelfieScreen from './src/screens/selfie.js';
 
 
 const Stack = createNativeStackNavigator();
@@ -58,6 +59,7 @@ function App() {
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Sign Up" component={SignupScreen} />
         <Stack.Screen name="Add Photos" component={AddPhotosScreen} />
+        <Stack.Screen name="Camera" component={SelfieScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
