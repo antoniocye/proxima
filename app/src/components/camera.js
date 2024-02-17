@@ -6,7 +6,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import AnimatedButton from './button';
 import cameraStyles from '../styles/cameraStyles';
 
-export default function CameraView() {
+export default function CameraView({ afterPhotoTaken }) {
   const [type, setType] = useState(CameraType.front);
   const [permission, requestPermission] = Camera.useCameraPermissions();
 
@@ -24,9 +24,12 @@ export default function CameraView() {
     if (cameraRef.current) {
       cameraRef.current.takePictureAsync().then((photo) => {
         // Save the photo to a file or process it further
+        cameraRef.current.pausePreview();
         console.log('Photo taken:', photo);
+        afterPhotoTaken();
       });
     }
+    
   }
 
   const cameraRef = useRef(null);
