@@ -20,20 +20,28 @@ export default class Profile{
         this._email = email;
         this._db = db;
         this._password = password;
-        console.log("Finished constructing profile");
     }
 
-    async initProfile(){
+    /* Flags:
+    - login
+    - create
+    - partner
+    */
+
+    async initProfile(flag){
         inUse = await this.emailInUse();
 
         if(inUse){
-            if(!user){
+            if((!flag || flag === "login") && !user){
                 console.log("We need to login the user")
                 await this.loginUser();
                 return "user-login";
             }
+            else if(user){
+                return "user-login";
+            }
         }
-        else if(this._password){
+        else if((!flag || flag === "create") && this._password){
             await this.createUser();
             return "user-create";
         }

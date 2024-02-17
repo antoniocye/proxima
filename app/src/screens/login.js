@@ -4,7 +4,8 @@ import globalStyles from '../styles/globalStyles';
 import AnimatedButton from '../components/button';
 import TextField from '../components/textfield';
 import PasswordField from '../components/passwordfield';
-
+import Profile from '../../database/Profile';
+import { isValidEmail, isStanfordEmail, notEmpty } from '../../database/authUtil';
 
 export default function LoginScreen({ navigation }) {
   const [myUser, setMyUser] = useState();
@@ -15,42 +16,40 @@ export default function LoginScreen({ navigation }) {
 
   useEffect( () => {    
       async function initializeProfile () {
+        console.log("Started initializing");
         result = await myUser.initProfile();
         console.log("Finished logging in");
       }
-    
       initializeProfile();
   }, [myUser]
   )
+
+
   const createAlert = (error) =>
   Alert.alert('Error loging into your account', error, [
     {text: 'OK', onPress: () => console.log('OK Pressed')},
   ]);
 
-  // validate email and password
-  function isValidEmail() {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-  }
-  function isStanfordEmail() {
-    const domain = 'stanford.edu';
-    const regex = new RegExp(`@${domain}$`, 'i'); // Case insensitive match for domain
-    return regex.test(email);
-  }
-  function notEmpty(){
-    return true;
-  }
   const attemptLogin = async () => {
-    if(notEmpty()){
-      console.log("notEmpty");
-      if(isValidEmail()){
-        console.log("email valid");
-        if(isStanfordEmail){
-          console.log("stanford email");
+
+    console.log("Attempted login");
+
+    if(notEmpty(email, password)){
+
+      if(isValidEmail(email)){
+
+        if(isStanfordEmail(email)){
           setLoading(true);
-          profile = new Profile({email: email, password: password});
-          setMyUser(profile);
-          
+          let profile = new Profile({email: email, password: password});
+          result = await profile.initProfile("login");
+          if(result === "user-login"){
+            setMyUser(profile);
+            navigation.navigate("Details");
+          }
+          else{
+            setLoading(false);
+            createAlert("Something weird happened");
+          }
         }
         else{
           createAlert("We only accept Stanford emails.");
@@ -61,10 +60,12 @@ export default function LoginScreen({ navigation }) {
       }
     }
     else{
-      createAlert("Please provide your email and password");
+      createAlert("Empty password or email");
     }
   }
 
+
+  // Access passed data using route.params
 
   return (
     <ImageBackground source={require('../../assets/img/background.png')} style={globalStyles.backgroundImage}>
@@ -73,15 +74,15 @@ export default function LoginScreen({ navigation }) {
           <Image source={require('../../assets/img/proxima-logo-dark.png')} style={globalStyles.logo}/>
           <Text style={globalStyles.heading}>log in</Text>
           <TextField 
-          placeholder="email" 
-          onChange = {(e) => setEmail(e.nativeEvent.text)} 
-          keyboardType="email-address"
+            placeholder="email" 
+            onChange = {(e) => setEmail(e.nativeEvent.text)} 
+            keyboardType="email-address"
           />
 
           <PasswordField 
-          placeholder="password" 
-          onChange = {(e) => setPassword(e.nativeEvent.text)} 
-          onSubmitEditing={(e) => console.log(e.nativeEvent.text)}/>
+            placeholder="password" 
+            onChange = {(e) => setPassword(e.nativeEvent.text)}
+          />
 
           <AnimatedButton onPress={attemptLogin} title="continue"/>
         </SafeAreaView>

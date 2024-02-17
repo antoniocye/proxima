@@ -47,9 +47,9 @@ function App() {
   }
   
   result = init();
-  user = new Profile({name:"Antonio", email:"antoniokambire@gmail.com", password:"Hello123"});
+  //user = new Profile({name:"Antonio", email:"antoniokambire@gmail.com", password:"Hello123"});
   
-  console.log("We have finished profile creation");
+  //console.log("We have finished profile creation");
 
   return (
     <GlobalUser.Provider value={{ myUser, setMyUser }}>
