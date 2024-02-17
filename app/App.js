@@ -1,6 +1,8 @@
 import React, { useCallback } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { Button, StyleSheet, Text, View } from 'react-native';
+import Profile from './database/Profile.js';
+import { init, auth, db } from './database/Init.js'
 import HomeScreen from './src/screens/home';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import DetailsScreen from './src/screens/details'; 
@@ -36,6 +38,15 @@ function App() {
   if (!fontsLoaded && !fontError) {
     return null;
   }
+
+  for(i = 0; i < 5; i++){
+    console.log("----------------------------------------");
+  }
+  
+  result = init();
+  user = new Profile({name:"Antonio", email:"antoniokambire@gmail.com", password:"Hello123"});
+  
+  console.log("We have finished profile creation");
 
   return (
     <NavigationContainer>

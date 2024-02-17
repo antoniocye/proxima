@@ -1,6 +1,10 @@
 # proxima
 Dating made easy.
 
+## Dependencies
+- Firebase, run as admin, under \app
+`npm install -g firebase-tools`
+`npm install firebase`
 
 
 ## When adding a page follow these 3 steps
