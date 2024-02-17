@@ -1,8 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { useState, useEffect} from 'react';
-import * as Location from 'expo-location';
-import getPermissions from './Location';
+//import * as Location from 'expo-location';
 
 /*
 const start = {
@@ -23,28 +22,20 @@ if (haversine(start, end, {threshold: 1, unit: 'meter'}) == false) {
 - Use haversine to see if database location is different from new location
 - When it changes, check if within __ meters of another person
 */
+    
+export default function getPermissions() = async (setLocation) => { 
+    let { status } = await Location.requestForegroundPermissionsAsync();
 
-export default function App() {
-  const [location, setLocation] = useState();
-  const haversine = require('haversine');
-  
-  useEffect(() => {
-      getPermissions(setLocation);
-  }, [location]);
+    if (status !== 'granted') {
+      console.log("Please grant location permissions");
+      return;
+    }
 
-  return (
-    <View style={styles.container}>
-      <Text> Hello </Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+    let currentLocation = await Location.getCurrentPositionAsync({});
+    setLocation(currentLocation);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+//    console.log("Longitude:");
+//    console.log(location.coords.longitude);
+//    console.log("Latitude:");
+//    console.log(location.coords.latitude);
+  }
