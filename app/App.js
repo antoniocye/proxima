@@ -1,5 +1,6 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useCallback } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import { useState, useEffect} from 'react';
 import * as Location from 'expo-location';
 import getPermissions from './Location';
@@ -23,8 +24,53 @@ if (haversine(start, end, {threshold: 1, unit: 'meter'}) == false) {
 - Use haversine to see if database location is different from new location
 - When it changes, check if within __ meters of another person
 */
+import Profile from './database/Profile.js';
+import { init, auth, db } from './database/Init.js'
+import HomeScreen from './src/screens/home';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import DetailsScreen from './src/screens/details'; 
+import LoginScreen from './src/screens/login';
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen'; 
 
-export default function App() {
+
+const Stack = createNativeStackNavigator();
+
+SplashScreen.preventAutoHideAsync(); // prevent the splash screen from auto-hiding
+
+
+/*
+ * Only add navigation points to this file, handle navigation in the files themselves
+ */
+
+
+
+function App() {
+
+  const [fontsLoaded, fontError] = useFonts({
+    'GeneralSans-Medium': require('./assets/fonts/GeneralSans-Medium.otf'),
+    'GeneralSans-Semibold': require('./assets/fonts/GeneralSans-Semibold.otf'),
+  });
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded || fontError) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded, fontError]);
+
+  if (!fontsLoaded && !fontError) {
+    return null;
+  }
+
+  for(i = 0; i < 5; i++){
+    console.log("----------------------------------------");
+  }
+  
+  result = init();
+  user = new Profile({name:"Antonio", email:"antoniokambire@gmail.com", password:"Hello123"});
+  
+  console.log("We have finished profile creation");
+
   const [location, setLocation] = useState();
   const haversine = require('haversine');
   
@@ -33,10 +79,13 @@ export default function App() {
   }, [location]);
 
   return (
-    <View style={styles.container}>
-      <Text> Hello </Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
+        <Stack.Screen name="Home" component={HomeScreen}/>
+        <Stack.Screen name="Details" component={DetailsScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
@@ -48,3 +97,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export default App;
