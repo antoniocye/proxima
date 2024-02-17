@@ -25,7 +25,7 @@
     "expo-font": "~11.10.3",
     "expo-splash-screen": "~0.26.4",
     "expo-image-picker": "~14.7.1",
-    "expo-camera": "~14.0.5"
+    "expo-camera": "~14.0.5",
     "react-native-screens": "~3.29.0",
     "react-native-web": "~0.19.6"
   },

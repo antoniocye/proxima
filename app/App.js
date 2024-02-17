@@ -25,7 +25,7 @@ import PingDeclinedScreen from './src/screens/ping/pingDeclined';
 import PingVerificationScreen from './src/screens/ping/pingVerification';
 import PingResultScreen from './src/screens/ping/pingResult';
 import PingWaitingScreen from './src/screens/ping/pingWaiting';
-import AwaitingVerificationScreen from './src/screens/ping/awaitingVerification';
+import AwaitingVerificationScreen from './src/screens/awaitingVerification';
 
 
 const Stack = createNativeStackNavigator();
