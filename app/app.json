@@ -32,6 +32,12 @@
         {
           "fonts": ["./assets/fonts/GeneralSans-Medium.otf", "./assets/fonts/GeneralSans-Semibold.otf"]
         }
+      ], 
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
       ]
     ]
   }
