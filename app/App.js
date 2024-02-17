@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState, createContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import Profile from './database/Profile.js';
@@ -21,9 +21,11 @@ SplashScreen.preventAutoHideAsync(); // prevent the splash screen from auto-hidi
  * Only add navigation points to this file, handle navigation in the files themselves
  */
 
+const GlobalUser = createContext();
 
 
 function App() {
+  const [myUser, setMyUser] = useState();
 
   const [fontsLoaded, fontError] = useFonts({
     'GeneralSans-Medium': require('./assets/fonts/GeneralSans-Medium.otf'),
@@ -50,14 +52,19 @@ function App() {
   console.log("We have finished profile creation");
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Home" component={HomeScreen} options={onLayoutRootView}/>
-        <Stack.Screen name="Details" component={DetailsScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Sign Up" component={SignupScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <GlobalUser.Provider value={{ myUser, setMyUser }}>
+    {
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
+          <Stack.Screen name="Home" component={HomeScreen} options={onLayoutRootView}/>
+          <Stack.Screen name="Details" component={DetailsScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Sign Up" component={SignupScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    }
+  </GlobalUser.Provider>
+    
   );
 }
 

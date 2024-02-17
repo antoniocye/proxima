@@ -13,6 +13,7 @@ const PasswordField = ({ placeholder, onSubmitEditing }) => {
             placeholder={placeholder}
             onSubmitEditing={onSubmitEditing}
             onFocus={handleFocus}
+            autoCapitalize='none'
             secureTextEntry={true}
             passwordRules={{ required: 'digit', minlength: '8' }}
             onBlur={handleBlur}

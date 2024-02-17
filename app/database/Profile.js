@@ -20,9 +20,7 @@ export default class Profile{
         this._email = email;
         this._db = db;
         this._password = password;
-        console.log("Going into initialization");
-
-        this.initProfile();
+        console.log("Finished constructing profile");
     }
 
     async initProfile(){
@@ -32,13 +30,16 @@ export default class Profile{
             if(!user){
                 console.log("We need to login the user")
                 await this.loginUser();
+                return "user-login";
             }
         }
         else if(this._password){
             await this.createUser();
+            return "user-create";
         }
         else{
-            console.log('The password is empty')
+            console.log('The password is empty');
+            return "pwd-empty";
         }
 
         console.log("Final user object", user);
