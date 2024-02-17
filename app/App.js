@@ -1,23 +1,48 @@
+import React, { useCallback } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import HomeScreen from './src/screens/home';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import DetailsScreen from './src/screens/details';  
+import DetailsScreen from './src/screens/details'; 
+import LoginScreen from './src/screens/login';
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen'; 
 
 
 const Stack = createNativeStackNavigator();
+
+SplashScreen.preventAutoHideAsync(); // prevent the splash screen from auto-hiding
+
 
 /*
  * Only add navigation points to this file, handle navigation in the files themselves
  */
 
+
+
 function App() {
+
+  const [fontsLoaded, fontError] = useFonts({
+    'GeneralSans-Medium': require('./assets/fonts/GeneralSans-Medium.otf'),
+    'GeneralSans-Semibold': require('./assets/fonts/GeneralSans-Semibold.otf'),
+  });
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded || fontError) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded, fontError]);
+
+  if (!fontsLoaded && !fontError) {
+    return null;
+  }
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
         <Stack.Screen name="Home" component={HomeScreen}/>
         <Stack.Screen name="Details" component={DetailsScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
