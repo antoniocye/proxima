@@ -10,18 +10,15 @@ export default function HomeScreen({ navigation , onLayoutRootView}) {
     <View style={globalStyles.backgroundImage} onLayout={onLayoutRootView}>
       <ImageBackground source={require('../../assets/img/background.png')} style={globalStyles.backgroundImage}>
         <SafeAreaView style={globalStyles.container}>
-          <ScrollView>
+          <ScrollView>          
             <Text style={globalStyles.heading}>pick a page</Text>
             <Text style={globalStyles.text}>experiment with ultra-custom designed user experiences that can enable new levels of customer satisfaction</Text>
+            <AnimatedButton title="Onboard" onPress={() => navigation.navigate('Onboarding Name')} />
             <AnimatedButton title="details" onPress={() => navigation.navigate('Details')} />
             <AnimatedButton title="login" onPress={() => navigation.navigate('Login')} />
             <AnimatedButton title="sign up" onPress={() => navigation.navigate('Sign Up')} />
             <AnimatedButton title="add photos" onPress={() => navigation.navigate('Add Photos')} />
-            
             <AnimatedButton title="take a selfie" onPress={() => navigation.navigate('Camera')} />
-            <AnimatedButton title="take a selfie" onPress={() => navigation.navigate('Camera')} />
-            <AnimatedButton title="take a selfie" onPress={() => navigation.navigate('Camera')} />
-            
             <AnimatedButton title="ping" onPress={() => navigation.navigate('Ping Start', {user_id: "asanshay"})} />
           </ScrollView>
         </SafeAreaView>

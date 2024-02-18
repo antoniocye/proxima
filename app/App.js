@@ -27,6 +27,16 @@ import PingResultScreen from './src/screens/ping/pingResult';
 import PingWaitingScreen from './src/screens/ping/pingWaiting';
 import AwaitingVerificationScreen from './src/screens/awaitingVerification';
 
+import OnboardingNameScreen from './src/screens/onboarding/onboardingName.js';
+import OnboardingAgeScreen from './src/screens/onboarding/onboardingAge.js';
+import OnboardingSchoolScreen from './src/screens/onboarding/onboardingSchool.js';
+import OnboardingPreferredGenderScreen from './src/screens/onboarding/onboardingPreferredGender.js';
+import OnboardingPassionsScreen from './src/screens/onboarding/onboardingPassions.js';
+import OnboardingFirstPromptScreen from './src/screens/onboarding/onboardingFirstPrompt.js';
+import OnboardingSecondPromptScreen from './src/screens/onboarding/onboardingSecondPrompt.js';
+import OnboardingThirdPromptScreen from './src/screens/onboarding/onboardingThirdPrompt.js';
+import OnboardingDoneScreen from './src/screens/onboarding/onboardingDone.js';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -83,6 +93,16 @@ function App() {
           <Stack.Screen name="Ping Waiting" component={PingWaitingScreen} />
           <Stack.Screen name="Ping Result" component={PingResultScreen} />
           <Stack.Screen name="Awaiting Verification" component={AwaitingVerificationScreen} />
+
+          <Stack.Screen name="Onboarding Name" component={OnboardingNameScreen} />
+          <Stack.Screen name="Onboarding Age" component={OnboardingAgeScreen} />
+          <Stack.Screen name="Onboarding School" component={OnboardingSchoolScreen} />
+          <Stack.Screen name="Onboarding Preferred Gender" component={OnboardingPreferredGenderScreen} />
+          <Stack.Screen name="Onboarding Passions" component={OnboardingPassionsScreen} />
+          <Stack.Screen name="Onboarding First Prompt" component={OnboardingFirstPromptScreen} />
+          <Stack.Screen name="Onboarding Second Prompt" component={OnboardingSecondPromptScreen} />
+          <Stack.Screen name="Onboarding Third Prompt" component={OnboardingThirdPromptScreen} />
+          <Stack.Screen name="Onboarding Done" component={OnboardingDoneScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     }
