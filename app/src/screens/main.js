@@ -78,7 +78,7 @@ export default function MainScreen({ navigation }) {
     getProfile();
   }
 
-  const updateProfilesArray = (updatedProfile) => {
+const updateProfilesArray = (updatedProfile) => {
   // Update the profiles array with the new profile data
   profiles[(i - 1) % profiles.length] = updatedProfile; // Directly updating the array for demonstration; consider state management practices
   console.log(profiles);
@@ -88,6 +88,7 @@ export default function MainScreen({ navigation }) {
   const swipeLeft = Gesture.Fling()
     .direction(Directions.LEFT)
     .onStart((e) => {
+      console.log("swiped left");
       const updatedProfile = { ...profile };
       runOnJS(setProfile)(updatedProfile);
       runOnJS(updateProfilesArray)(updatedProfile); // Update profiles array
@@ -97,6 +98,7 @@ export default function MainScreen({ navigation }) {
   const swipeRight = Gesture.Fling()
     .direction(Directions.RIGHT)
     .onStart((e) => {
+      console.log("swiped right");
       const updatedProfile = { ...profile}
       runOnJS(setProfile)(updatedProfile);
       runOnJS(updateProfilesArray)(updatedProfile); // Update profiles array
@@ -111,7 +113,7 @@ export default function MainScreen({ navigation }) {
 
   return (
     <GestureHandlerRootView style={[globalStyles.backgroundImage]}>
-      <GestureDetector gesture={composed}>
+      <GestureDetector gesture={swipeLeft}>
         <ImageBackground source={require('../../assets/img/background.png')} style={globalStyles.backgroundImage}>
           <SafeAreaView/>
             {!isLoading ? <ScrollView>

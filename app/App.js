@@ -59,7 +59,6 @@ export const GlobalUser = createContext();
 
 
 function App() {
-  useEffect
 
   notifs();
   

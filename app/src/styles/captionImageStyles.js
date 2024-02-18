@@ -6,7 +6,6 @@ const captionImageStyles = {
     marginVertical: 20,
     overflow: 'hidden',
     borderRadius: 20,
-    
   },
 
   image: {
@@ -24,8 +23,8 @@ const captionImageStyles = {
     left: 0,
     right: 0,
     padding: 20,
-    borderRadius: '0 0 20 20', // top-left, top-right, bottom-right, bottom-left
-    
+    // borderRadius: '0 0 20 20', // top-left, top-right, bottom-right, bottom-left
+    overflow: 'hidden',
   },
 
   caption: {
