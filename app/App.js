@@ -1,8 +1,8 @@
-import React, { useCallback, useState, createContext } from 'react';
+import React, { useCallback, useState, createContext, useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
+import { BackgroundLocationService } from './database/Location.js';
 
 // expo
 import { useFonts } from 'expo-font';
@@ -41,6 +41,7 @@ export const GlobalUser = createContext();
 
 
 function App() {
+
   const [myUser, setMyUser] = useState();
 
   const [fontsLoaded, fontError] = useFonts({
@@ -59,7 +60,7 @@ function App() {
   }
 
   for(i = 0; i < 5; i++){
-    console.log("----------------------------------------");
+    console.log("---------------------------------------------------------------------");
   }
   
   result = init();
@@ -69,6 +70,7 @@ function App() {
     <GlobalUser.Provider value={[ myUser, setMyUser ] }>
     {
       <NavigationContainer>
+        <BackgroundLocationService />
         <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
           <Stack.Screen name="Home" component={HomeScreen} options={onLayoutRootView}/>
           <Stack.Screen name="Details" component={DetailsScreen} />
@@ -99,5 +101,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export const useGlobalUser = () => {
+  return useContext(GlobalUser);
+};
+
 
 export default App;

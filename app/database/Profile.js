@@ -1,6 +1,7 @@
 import { auth, db, user } from './Init.js'
 import { get, ref, set } from 'firebase/database'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, signOut, onAuthStateChanged } from 'firebase/auth'
+import { BackgroundLocationService } from './Location.js';
 
 export default class Profile{
     // _biographical info
