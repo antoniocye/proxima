@@ -2,7 +2,7 @@ import React, { useCallback, useState, createContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 // expo
 import { useFonts } from 'expo-font';
@@ -25,7 +25,11 @@ import PingDeclinedScreen from './src/screens/ping/pingDeclined';
 import PingVerificationScreen from './src/screens/ping/pingVerification';
 import PingResultScreen from './src/screens/ping/pingResult';
 import PingWaitingScreen from './src/screens/ping/pingWaiting';
-import AwaitingVerificationScreen from './src/screens/ping/awaitingVerification';
+import AwaitingVerificationScreen from './src/screens/awaitingVerification';
+import MainScreen from './src/screens/main.js';
+
+// styles
+import globalStyles from './src/styles/globalStyles.js';
 
 
 const Stack = createNativeStackNavigator();
@@ -65,28 +69,35 @@ function App() {
   result = init();
 
   return (
-
-    <GlobalUser.Provider value={{ myUser, setMyUser }}>
-    {
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
-          <Stack.Screen name="Home" component={HomeScreen} options={onLayoutRootView}/>
-          <Stack.Screen name="Details" component={DetailsScreen} />
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Sign Up" component={SignupScreen} />
-          <Stack.Screen name="Add Photos" component={AddPhotosScreen} />
-          <Stack.Screen name="Camera" component={SelfieScreen} />
-          <Stack.Screen name="Ping Start" component={PingStartScreen} />
-          <Stack.Screen name="Ping Decision" component={PingDecisionScreen} />
-          <Stack.Screen name="Ping Declined" component={PingDeclinedScreen} />
-          <Stack.Screen name="Ping Verification" component={PingVerificationScreen} />
-          <Stack.Screen name="Ping Waiting" component={PingWaitingScreen} />
-          <Stack.Screen name="Ping Result" component={PingResultScreen} />
-          <Stack.Screen name="Awaiting Verification" component={AwaitingVerificationScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    }
-  </GlobalUser.Provider>
+    
+      <GlobalUser.Provider value={{ myUser, setMyUser }}>
+        {
+          
+            <NavigationContainer>
+              
+              <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
+                
+                <Stack.Screen name="Home" component={HomeScreen} options={onLayoutRootView}/>
+                <Stack.Screen name="Details" component={DetailsScreen} />
+                <Stack.Screen name="Login" component={LoginScreen} />
+                <Stack.Screen name="Sign Up" component={SignupScreen} />
+                <Stack.Screen name="Add Photos" component={AddPhotosScreen} />
+                <Stack.Screen name="Camera" component={SelfieScreen} />
+                <Stack.Screen name="Ping Start" component={PingStartScreen} />
+                <Stack.Screen name="Ping Decision" component={PingDecisionScreen} />
+                <Stack.Screen name="Ping Declined" component={PingDeclinedScreen} />
+                <Stack.Screen name="Ping Verification" component={PingVerificationScreen} />
+                <Stack.Screen name="Ping Waiting" component={PingWaitingScreen} />
+                <Stack.Screen name="Ping Result" component={PingResultScreen} />
+                <Stack.Screen name="Awaiting Verification" component={AwaitingVerificationScreen} />
+                <Stack.Screen name="Main" component={MainScreen} />
+                
+              </Stack.Navigator>
+              
+            </NavigationContainer>
+          
+        }
+      </GlobalUser.Provider>
     
   );
 }

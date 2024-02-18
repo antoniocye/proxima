@@ -22,6 +22,7 @@ const globalStyles = {
   // Typography
   fontSize,
   fontFamily,
+  boldFontFamily,
 
   // Text
   text: {
@@ -147,6 +148,30 @@ const globalStyles = {
   // Containers
   keyboardAvoidingContainer: {
     alignItems: 'center',
+  },
+
+  image: {
+    height: 200,
+    width: 200,
+  },
+
+  chip: {
+    backgroundColor: secondaryColor,
+    borderColor: primaryColor,
+    borderWidth: 2,
+    height: 40,
+    borderRadius: 20,
+    paddingHorizontal: 20,
+    margin: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minWidth: 100,
+  },
+
+  chipLabel: {
+    fontFamily: boldFontFamily,
+    fontSize: 25,
+    color: primaryColor,
   },
 
 };

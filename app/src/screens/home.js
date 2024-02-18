@@ -17,6 +17,7 @@ export default function HomeScreen({ navigation , onLayoutRootView}) {
           <AnimatedButton title="add photos" onPress={() => navigation.navigate('Add Photos')} />
           <AnimatedButton title="take a selfie" onPress={() => navigation.navigate('Camera')} />
           <AnimatedButton title="ping" onPress={() => navigation.navigate('Ping Start', {user_id: "asanshay"})} />
+          <AnimatedButton title="main profile page" onPress={() => navigation.navigate('Main')} />
         </View>
       </ImageBackground>
 
