@@ -74,7 +74,7 @@ export default function SignupScreen({ navigation }) {
         <Text style={globalStyles.heading}>create an account</Text>
         <TextField 
           placeholder="email" 
-          onChange = {(e) => setEmail()} 
+          onChange = {(e) => setEmail(e)} 
           keyboardType="email-address"
         />
 

@@ -16,7 +16,7 @@ export default function PingStartScreen({ route, navigation }) {
     <ImageBackground source={require('../../../assets/img/background.png')} style={globalStyles.backgroundImage}>
       <SafeAreaView style={globalStyles.container}>
         <Text style={globalStyles.text}>you matched with</Text>
-        <Text style={globalStyles.heading}>{profile.name} {message}</Text>
+        <Text style={globalStyles.heading}>{profile.name}</Text>
         <Image source={profile.photos[0].uri} style={profileStyles.mainImage}/>
         <View style={profileStyles.row}>
           <Chip label={profile.age}/> 

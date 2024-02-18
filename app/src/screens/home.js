@@ -8,20 +8,27 @@ import { GlobalUser } from '../../App';
 import { auth } from '../../database/Init';
 import Profile from '../../database/Profile';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { get } from 'firebase/database';
 
 export default function HomeScreen({ navigation , onLayoutRootView}) {
 
   const [myUser, setMyUser] = useContext(GlobalUser);
 
   onAuthStateChanged(auth, async (user) => {
+    console.log("auth state changed", auth);
     if(!user){
       navigation.navigate("Choose Auth Method");
     }
     else{
       if(!myUser){
         let profile = new Profile({});
-        await profile.initProfile(flag = 'alr-in');
+        [result, returnTo] = await profile.initProfile(flag = 'alr-in');
         setMyUser(profile);
+        if(getAuth().currentUser.emailVerified === false){
+          if(returnTo != null){
+            navigation.navigate(returnTo);
+          }
+        }
       }
     }
 

@@ -9,7 +9,7 @@ export default function PingDeclinedScreen({ route, navigation }) {
   async function waitForThreeSeconds() {
     return new Promise(resolve => {
       setTimeout(() => {
-        resolve('Gupta');
+        resolve('');
       }, 3000); // 3000 milliseconds = 3 seconds
     });
   }

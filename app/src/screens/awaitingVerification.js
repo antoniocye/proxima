@@ -11,20 +11,21 @@ export default function AwaitingVerificationScreen({ navigation }) {
   const [message, setMessage] = useState('');
   const [myUser, setMyUser] = useContext(GlobalUser);
 
-  let count = 1;
+  let count = 0;
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if(count > 2){
+      if(count > 3){
         navigation.navigate("Home");
       }
+
       console.log(getAuth())
       console.log(auth.currentUser.emailVerified);
       if (auth && auth.currentUser && auth.currentUser.emailVerified === true) {
         navigation.navigate("Home");
       }
       count ++;
-    }, 1000); // Check every 5 seconds
+    }, 5000); // Check every 5 seconds
   
     // Clean up the interval on component unmount
     return () => clearInterval(interval);

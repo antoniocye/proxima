@@ -7,6 +7,7 @@ import PasswordField from '../components/passwordfield';
 import Profile from '../../database/Profile';
 import { isValidEmail, isStanfordEmail, notEmpty, createAlert } from '../../database/authUtil';
 import { GlobalUser } from '../../App';
+import { getAuth } from 'firebase/auth';
 
 export default function LoginScreen({ navigation }) {
   const [myUser, setMyUser] = useContext(GlobalUser);
@@ -14,13 +15,24 @@ export default function LoginScreen({ navigation }) {
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
 
-  const logInErrorAlert = () => {
-    createAlert("Oops! An error occured...", "There was a problem logging you in, try again!");
+  useEffect(() => {
+    setLoading(true);
+    if(getAuth() && getAuth().currentUser){
+      createAlert("You are already logged in!");
+      navigation.goBack();
+    }
+    else{
+      console.log("Not logged in");
+      setLoading(false);
+    }
+  }, [])
+  const logInErrorAlert = (error) => {
+    createAlert("Oops! An error occured...", error);
   }
 
   const attemptLogin = async () => {
 
-    console.log("Attempted login");
+    console.log("Attempted login", email, password);
 
     if(notEmpty(email, password)){
 
@@ -29,26 +41,27 @@ export default function LoginScreen({ navigation }) {
         if(isStanfordEmail(email)){
           setLoading(true);
           let profile = new Profile({email: email, password: password});
-          result = await profile.initProfile("login");
+          [result, returnTo] = await profile.initProfile("login");
+          console.log("Result:", result);
           if(result === "user-login"){
             setMyUser(profile);
-            navigation.navigate("Awaiting Verification");
+            navigation.navigate("Home");
           }
           else{
             setLoading(false);
-            logInErrorAlert();
+            logInErrorAlert("Invalid email or password. Please try again.");
           }
         }
         else{
-          logInErrorAlert();
+          logInErrorAlert("We only accept Stanford email ids.");
         }
       }
       else{
-        logInErrorAlert();
+        logInErrorAlert("Please enter a valid email address.");
       }
     }
     else{
-      logInErrorAlert();
+      logInErrorAlert("Email and password cannot be empty.");
     }
   }
 
@@ -70,7 +83,7 @@ export default function LoginScreen({ navigation }) {
 
             <PasswordField 
               placeholder="password" 
-              onChange = {(e) => setPassword()}
+              onChange = {(e) => setPassword(e)}
             />
 
             <AnimatedButton onPress={attemptLogin} title="continue"/>    

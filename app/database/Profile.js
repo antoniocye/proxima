@@ -22,6 +22,8 @@ export default class Profile{
     _interested = [];
     _match = [];
 
+    _returnTo;
+
     // if you want to set an array, get the current array first, change it, then call the function to set array
     constructor({name, email, password, userId, age, quotes, photos}){
         this._name = name;
@@ -45,14 +47,15 @@ export default class Profile{
     - create
     - partner
     */
-
     async initProfile(flag){
+
         let result;
 
         if(!(flag === "alr-in")){
             inUse = await this.emailInUse();
 
             if(inUse){
+                returnTo = "Home";
                 if((!flag || flag === "login") && !user){
                     await this.loginUser();
                     result = "user-login";
@@ -61,11 +64,11 @@ export default class Profile{
                     result = "user-login";
                 }
                 else if(flag === "create"){
-                    result = "user-exists";
                 }
             }
             else if((!flag || flag === "create") && this._password){
                 await this.createUser();
+                returnTo = "Awaiting Verification";
                 result = "user-create";
             }
             else{
@@ -74,7 +77,7 @@ export default class Profile{
             }
         }
         await this.fetchUserData();
-        return result;
+        return [result, returnTo];
     }
 
     async createUser(){
@@ -100,6 +103,7 @@ export default class Profile{
 
     // we have a valid user object and will fetch the data, adding onValue callbacks at the same time
     async fetchUserData(){
+        console.log("Fetching user data");
         this._userId = getAuth().currentUser.uid;
         let snapshot = await get(ref(this._db, "Users/" + this._userId));
         userSnap = snapshot.val();
@@ -139,8 +143,10 @@ export default class Profile{
 
     async signoutUser(){
         signOut(auth).then(() => {
+            console.log("Signed out");
             return true;
         }).catch((error) => {
+            console.log("Error signing out");
             console.error(error);
             return false;
         });
