@@ -34,9 +34,10 @@ function notifs() {
         // Handle user clicking on a notification and open the screen
         const handleNotificationClick = async (response) => {
           const screen = response?.notification?.request?.content?.data?.screen;
+          const user_id = response?.notification?.request?.content?.data?.user_id;
           if (screen !== null) {
             //navigation.navigate(screen);
-            RootNavigation.navigate(screen);
+            RootNavigation.navigate(screen, user_id);
           }
         };
     
@@ -56,7 +57,7 @@ function notifs() {
           if (remoteMessage?.data?.screen) {
             console.log(remoteMessage.data.screen);
             //navigation.navigate(`${remoteMessage.data.screen}`);
-            RootNavigation.navigate(`${remoteMessage.data.screen}`);
+            RootNavigation.navigate(`${remoteMessage.data.screen}`, remoteMessage.data.user_id);
           }
         });
     
@@ -71,7 +72,7 @@ function notifs() {
               );
               if (remoteMessage?.data?.screen) {
                 //navigation.navigate(`${remoteMessage.data.screen}`);
-                RootNavigation.navigate(`${remoteMessage.data.screen}`);
+                RootNavigation.navigate(`${remoteMessage.data.screen}`, remoteMessage.data.user_id);
               }
             }
           });
