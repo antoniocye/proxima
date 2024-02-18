@@ -41,6 +41,7 @@ export default function LoginScreen({ navigation }) {
         if(isStanfordEmail(email)){
           setLoading(true);
           let profile = new Profile({email: email, password: password});
+          console.log("Profile created");
           [result, returnTo] = await profile.initProfile("login");
           console.log("Result:", result);
           if(result === "user-login"){

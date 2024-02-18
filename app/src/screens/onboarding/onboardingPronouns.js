@@ -7,19 +7,19 @@ import TextField from '../../components/textfield';
 import { createAlert } from '../../../database/authUtil';
 import { GlobalUser } from '../../../App';
 
-export default function OnboardingNameScreen({ navigation }) {
-  const [firstName, changeName] = useState();
+export default function OnboardingPronounsScreen({ navigation }) {
+  const [pronouns, changePronouns] = useState();
   const [myUser, setMyUser] = useContext(GlobalUser);
 
   async function tryNext() {
-    console.log(firstName);
+    console.log(pronouns);
 
-    if (firstName != null) {
-      await myUser.changeUserPropertyInDatabase("name", firstName);
-      await myUser.changeUserPropertyInDatabase("onbStep", 'Onboarding Age');
-      navigation.navigate('Onboarding Age');      
+    if (pronouns != null) {
+      await myUser.changeUserPropertyInDatabase("pronouns", pronouns);
+      await myUser.changeUserPropertyInDatabase("onbStep", 'Onboarding Quotes');
+      navigation.navigate('Onboarding Quotes');
     } else {
-      createAlert("Oops!", "Please enter a name");
+      createAlert("Oops!", "Please enter valid pronouns");
     }
   }
 
@@ -27,12 +27,12 @@ export default function OnboardingNameScreen({ navigation }) {
     <ImageBackground source={require('../../../assets/img/background.png')} style={globalStyles.backgroundImage}>
       <SafeAreaView style={[globalStyles.container, {justifyContent:'flex-start'}]}>
         <View style = {{marginTop: 40}}>
-          <Progress.Bar progress={0} width={200} color={globalStyles.primaryColor}/>
-          <Text style={globalStyles.text}>0%</Text>
+          <Progress.Bar progress={0.40} width={200} color={globalStyles.primaryColor}/>
+          <Text style={globalStyles.text}>40%</Text>
         </View>
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={globalStyles.keyboardAvoidingContainer}>
-          <Text style={globalStyles.heading}>my name is</Text>
-          <TextField placeholder="first name" onChange={(e) => changeName(e)}/>
+          <Text style={globalStyles.heading}>my pronouns are</Text>
+          <TextField placeholder="pro/nouns" onChange={(e) => changePronouns(e)}/>
           <AnimatedButton title="next" onPress={() => tryNext()}/>
         </KeyboardAvoidingView>
       </SafeAreaView>

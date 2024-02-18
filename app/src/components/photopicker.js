@@ -17,10 +17,11 @@ export default function PhotoPicker({afterPhotoSelected}) {
     });
 
     // console.log(result.assets[0].uri);
-    afterPhotoSelected(result.assets[0].uri);
+    
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
+      afterPhotoSelected(result.assets[0].uri);
     }
   };
 

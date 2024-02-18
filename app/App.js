@@ -37,6 +37,8 @@ import OnboardingFirstPromptScreen from './src/screens/onboarding/onboardingFirs
 import OnboardingSecondPromptScreen from './src/screens/onboarding/onboardingSecondPrompt.js';
 import OnboardingThirdPromptScreen from './src/screens/onboarding/onboardingThirdPrompt.js';
 import OnboardingDoneScreen from './src/screens/onboarding/onboardingDone.js';
+import OnboardingPronounsScreen from "./src/screens/onboarding/onboardingPronouns.js";
+import OnboardingQuotesScreen from "./src/screens/onboarding/onboardingQuotes.js";
 import ChooseAuthMethodScreen from "./src/screens/chooseAuthMethod.js";
 
 import notifs from "./utils/notifs";
@@ -113,6 +115,7 @@ function App() {
 
               <Stack.Screen name="Onboarding Name" component={OnboardingNameScreen} />
               <Stack.Screen name="Onboarding Age" component={OnboardingAgeScreen} />
+              <Stack.Screen name="Onboarding Pronouns" component={OnboardingPronounsScreen} />
               <Stack.Screen name="Onboarding School" component={OnboardingSchoolScreen} />
               <Stack.Screen name="Onboarding Preferred Gender" component={OnboardingPreferredGenderScreen} />
               <Stack.Screen name="Onboarding Passions" component={OnboardingPassionsScreen} />
@@ -120,6 +123,7 @@ function App() {
               <Stack.Screen name="Onboarding Second Prompt" component={OnboardingSecondPromptScreen} />
               <Stack.Screen name="Onboarding Third Prompt" component={OnboardingThirdPromptScreen} />
               <Stack.Screen name="Onboarding Done" component={OnboardingDoneScreen} />
+              <Stack.Screen name="Onboarding Quotes" component={OnboardingQuotesScreen} />
             </Stack.Navigator>
           </NavigationContainer>
         }

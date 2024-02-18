@@ -12,13 +12,13 @@ const requestUserPermission = async () => {
     if (enabled) {
       console.log("Authorization status:", authStatus);
     }
+
+    return enabled;
 };
 
-export function getTokenForDatabase(){
-    if (requestUserPermission()) {
-        messaging()
-          .getToken()
-          .then((token) => {return token});
+export async function getTokenForDatabase(){
+    if (await requestUserPermission()) {
+        return await messaging().getToken();
     }
 }
 

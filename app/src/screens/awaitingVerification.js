@@ -14,15 +14,18 @@ export default function AwaitingVerificationScreen({ navigation }) {
   let count = 0;
 
   useEffect(() => {
+    myUser.changeUserPropertyInDatabase("onbStep", "Onboarding Name");
+    let returnTo = "Onboarding Name";
+
     const interval = setInterval(() => {
-      if(count > 3){
-        navigation.navigate("Home");
+      if(count > 1){
+        navigation.navigate(returnTo);
       }
 
       console.log(getAuth())
       console.log(auth.currentUser.emailVerified);
       if (auth && auth.currentUser && auth.currentUser.emailVerified === true) {
-        navigation.navigate("Home");
+        navigation.navigate(returnTo);
       }
       count ++;
     }, 5000); // Check every 5 seconds

@@ -23,9 +23,13 @@ export default function HomeScreen({ navigation , onLayoutRootView}) {
       if(!myUser){
         let profile = new Profile({});
         [result, returnTo] = await profile.initProfile(flag = 'alr-in');
+        console.log("88888888");
         setMyUser(profile);
+        console.log("111111");
         if(getAuth().currentUser.emailVerified === false){
+          console.log("3333333333");
           if(returnTo != null){
+            console.log("444444444");
             navigation.navigate(returnTo);
           }
         }

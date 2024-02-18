@@ -7,9 +7,10 @@ import TextField from '../../components/textfield';
 export default function OnboardingDoneScreen({ navigation }) {
   return (
     <ImageBackground source={require('../../../assets/img/background.png')} style={globalStyles.backgroundImage}>
-      <SafeAreaView style={[globalStyles.container, {justifyContent:'flex-start'}]}>
+      <SafeAreaView style={[globalStyles.container]}>
         <Image source={require('../../../assets/img/proxima-logo-dark.png')} style={globalStyles.logo}/>
-        <Text style={globalStyles.heading}>welcome to proxima!</Text>
+        <Text style={globalStyles.heading}>warm welcome to proxima!</Text>
+        <View style={{height:60}}/>
         <AnimatedButton title="awesome!" onPress={() => navigation.navigate('Main')} />
       </SafeAreaView>
     </ImageBackground>

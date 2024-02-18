@@ -1,6 +1,17 @@
 import { auth, db, user } from './Init.js'
 import { get, ref, set, onValue } from 'firebase/database'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, signOut, onAuthStateChanged, getAuth } from 'firebase/auth'
+import { getTokenForDatabase } from '../utils/notifs.js'
+
+let onboarding = [
+    "Sign Up",
+    "Awaiting Verification",
+    "Onboarding Name",
+    "Onboarding Age",
+    "Onboarding Pronouns",
+    "Onboarding Quotes",
+    "Onboarding Photos",
+]
 
 export default class Profile{
     // _biographical info
@@ -16,6 +27,9 @@ export default class Profile{
     _location;
     _age;
     _pronouns;
+    _notifId;
+
+    _onbStep = "Awaiting Verification";
 
     _quotes = [];
     _photos = [];
@@ -34,12 +48,16 @@ export default class Profile{
         this._age = age;
         this._quotes = quotes;
         this._photos = photos;
+        this._onbStep = "Awaiting Verification";
+        
         
         onAuthStateChanged(auth, () => {
             if(auth && auth.currentUser){
                 this._is_verified = auth.currentUser.emailVerified;
             }
         })
+
+        
     }
 
     /* Flags:
@@ -50,6 +68,12 @@ export default class Profile{
     async initProfile(flag){
 
         let result;
+        let returnTo;
+        let inUse;
+
+        await this.changeUserPropertyInDatabase("onbStep", this._onbStep);
+
+        
 
         if(!(flag === "alr-in")){
             inUse = await this.emailInUse();
@@ -68,7 +92,6 @@ export default class Profile{
             }
             else if((!flag || flag === "create") && this._password){
                 await this.createUser();
-                returnTo = "Awaiting Verification";
                 result = "user-create";
             }
             else{
@@ -77,6 +100,10 @@ export default class Profile{
             }
         }
         await this.fetchUserData();
+
+        returnTo = this._onbStep;
+        console.log("returnTo", returnTo);
+
         return [result, returnTo];
     }
 
@@ -96,8 +123,11 @@ export default class Profile{
     async addBasicUser(){
         console.log("Add basic user info to the database")
         console.log("uid", this._userId);
+        this._notifId = await getTokenForDatabase();
         await this.changeUserPropertyInDatabase("email", this._email);
         await this.changeUserPropertyInDatabase("isVerified", false);
+        await this.changeUserPropertyInDatabase("notifId", this._notifId);
+
     }
 
 
@@ -112,6 +142,7 @@ export default class Profile{
             userSnap = snapshot.val();
             this.updateProperties(userSnap);
         })
+        console.log("Done fetching user data");
     }
 
     updateProperties(userSnap){
@@ -124,6 +155,7 @@ export default class Profile{
         this._photos = userSnap.photos;
         this._interested = userSnap.interested;
         this._match = userSnap.match;
+        this._onbStep = userSnap.onbStep;
     }
 
     async loginUser(){
@@ -157,6 +189,7 @@ export default class Profile{
     }
 
     async changeUserPropertyInDatabase(propertyName, properties){
+        console.log("Changing user property in database", propertyName, properties);
         await set(ref(this._db, 'Users/' + this._userId + "/" + propertyName), properties);
     }
 
