@@ -1,7 +1,5 @@
-import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
-import React, { useState, useEffect, createRef,  useCallback, useState, createContext  } from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React, { useState, useEffect, createRef,  useCallback, createContext  } from "react";
 import { NavigationContainer } from '@react-navigation/native';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
