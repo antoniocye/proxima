@@ -1,5 +1,5 @@
 # proxima
-Dating made easy.
+Bringing back spontaneous romance.
 
 ## Dependencies
 - Firebase, run as admin, under \app
