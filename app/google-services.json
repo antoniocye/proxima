@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "941793154369",
+    "firebase_url": "https://proxima-2024-treehacks-default-rtdb.firebaseio.com",
+    "project_id": "proxima-2024-treehacks",
+    "storage_bucket": "proxima-2024-treehacks.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:941793154369:android:038a8d20e624dafb83fdc0",
+        "android_client_info": {
+          "package_name": "com.proxima.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApwfavEjMQd98JdrPaRyIp0MyZXr4GzZ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

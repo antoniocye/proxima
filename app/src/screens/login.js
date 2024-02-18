@@ -6,9 +6,10 @@ import TextField from '../components/textfield';
 import PasswordField from '../components/passwordfield';
 import Profile from '../../database/Profile';
 import { isValidEmail, isStanfordEmail, notEmpty, createAlert } from '../../database/authUtil';
+import { GlobalUser } from '../../App';
 
 export default function LoginScreen({ navigation }) {
-  const [myUser, setMyUser] = useState();
+  const [myUser, setMyUser] = useContext(GlobalUser);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
@@ -31,7 +32,7 @@ export default function LoginScreen({ navigation }) {
           result = await profile.initProfile("login");
           if(result === "user-login"){
             setMyUser(profile);
-            navigation.navigate("Details");
+            navigation.navigate("Awaiting Verification");
           }
           else{
             setLoading(false);

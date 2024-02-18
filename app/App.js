@@ -1,4 +1,5 @@
-import React, { useCallback, useState, createContext } from 'react';
+import { StatusBar } from "expo-status-bar";
+import React, { useState, useEffect, createRef,  useCallback, createContext  } from "react";
 import { NavigationContainer } from '@react-navigation/native';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -26,7 +27,6 @@ import PingVerificationScreen from './src/screens/ping/pingVerification';
 import PingResultScreen from './src/screens/ping/pingResult';
 import PingWaitingScreen from './src/screens/ping/pingWaiting';
 import AwaitingVerificationScreen from './src/screens/awaitingVerification';
-
 import OnboardingNameScreen from './src/screens/onboarding/onboardingName.js';
 import OnboardingAgeScreen from './src/screens/onboarding/onboardingAge.js';
 import OnboardingSchoolScreen from './src/screens/onboarding/onboardingSchool.js';
@@ -37,6 +37,8 @@ import OnboardingSecondPromptScreen from './src/screens/onboarding/onboardingSec
 import OnboardingThirdPromptScreen from './src/screens/onboarding/onboardingThirdPrompt.js';
 import OnboardingDoneScreen from './src/screens/onboarding/onboardingDone.js';
 
+import notifs from "./utils/notifs";
+import { navigationRef } from './utils/RootNavigation';
 
 const Stack = createNativeStackNavigator();
 
@@ -47,10 +49,12 @@ SplashScreen.preventAutoHideAsync(); // prevent the splash screen from auto-hidi
  * Only add navigation points to this file, handle navigation in the files themselves
  */
 
-const GlobalUser = createContext();
+export const GlobalUser = createContext();
 
 
 function App() {
+  notifs()
+  
   const [myUser, setMyUser] = useState();
 
   const [fontsLoaded, fontError] = useFonts({
@@ -76,9 +80,9 @@ function App() {
 
   return (
 
-    <GlobalUser.Provider value={{ myUser, setMyUser }}>
+    <GlobalUser.Provider value={[ myUser, setMyUser ] }>
     {
-      <NavigationContainer>
+      <NavigationContainer ref={navigationRef}r>
         <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
           <Stack.Screen name="Home" component={HomeScreen} options={onLayoutRootView}/>
           <Stack.Screen name="Details" component={DetailsScreen} />
@@ -114,9 +118,9 @@ function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 
