@@ -1,7 +1,6 @@
 import { auth, db, user } from './Init.js'
-import { get, ref, set } from 'firebase/database'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, signOut, onAuthStateChanged } from 'firebase/auth'
-import { getTokenForDatabase } from '../utils/notifs.js';
+import { get, ref, set, onValue } from 'firebase/database'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, signOut, onAuthStateChanged, getAuth } from 'firebase/auth'
 
 export default class Profile{
     // _biographical info
@@ -12,16 +11,28 @@ export default class Profile{
     _name;
     _email;
     _password;
-    _is_verified = false;
+    _is_verified = true;
     _userId;
-    _notifId;
     _location;
+    _age;
+    _pronouns;
 
-    constructor({name, email, password}){
+    _quotes = [];
+    _photos = [];
+    _interested = [];
+    _match = [];
+
+    // if you want to set an array, get the current array first, change it, then call the function to set array
+    constructor({name, email, password, userId, age, quotes, photos}){
         this._name = name;
         this._email = email;
         this._db = db;
         this._password = password;
+        this._userId = userId;
+        this._age = age;
+        this._quotes = quotes;
+        this._photos = photos;
+        
         onAuthStateChanged(auth, () => {
             if(auth && auth.currentUser){
                 this._is_verified = auth.currentUser.emailVerified;
@@ -36,33 +47,34 @@ export default class Profile{
     */
 
     async initProfile(flag){
-        inUse = await this.emailInUse();
-        this._notifId = getTokenForDatabase();
-        if(inUse){
-            if((!flag || flag === "login") && !user){
-                console.log("We need to login the user")
-                await this.loginUser();
-                return "user-login";
-            }
-            else if(user){
-                return "user-login";
-            }
-            else if(flag === "create"){
-                return "user-exists";
-            }
-        }
-        else if((!flag || flag === "create") && this._password){
-            await this.createUser();
-            return "user-create";
-        }
-        else{
-            console.log('The password is empty');
-            return "pwd-empty";
-        }
+        let result;
 
-        // we init the localisation property
+        if(!(flag === "alr-in")){
+            inUse = await this.emailInUse();
 
-        console.log("Final user object", user);
+            if(inUse){
+                if((!flag || flag === "login") && !user){
+                    await this.loginUser();
+                    result = "user-login";
+                }
+                else if(user){
+                    result = "user-login";
+                }
+                else if(flag === "create"){
+                    result = "user-exists";
+                }
+            }
+            else if((!flag || flag === "create") && this._password){
+                await this.createUser();
+                result = "user-create";
+            }
+            else{
+                console.log('The password is empty');
+                result = "pwd-empty";
+            }
+        }
+        await this.fetchUserData();
+        return result;
     }
 
     async createUser(){
@@ -80,11 +92,34 @@ export default class Profile{
 
     async addBasicUser(){
         console.log("Add basic user info to the database")
-        console.log("uid", this._uid);
-        await this.changeUserPropertyInDatabase({
-            email: this._email,
-            isVerified: false
-        });
+        console.log("uid", this._userId);
+        await this.changeUserPropertyInDatabase("email", this._email);
+        await this.changeUserPropertyInDatabase("isVerified", false);
+    }
+
+
+    // we have a valid user object and will fetch the data, adding onValue callbacks at the same time
+    async fetchUserData(){
+        this._userId = getAuth().currentUser.uid;
+        let snapshot = await get(ref(this._db, "Users/" + this._userId));
+        userSnap = snapshot.val();
+        this.updateProperties(userSnap);
+        onValue(ref(this._db, "Users/" + this._userId), (snapshot) => {
+            userSnap = snapshot.val();
+            this.updateProperties(userSnap);
+        })
+    }
+
+    updateProperties(userSnap){
+        this._name = userSnap.name;
+        this._pronouns = userSnap.pronouns;
+        this._is_verified = userSnap.isVerified;
+        this._location = userSnap.location;
+        this._age = userSnap.age;
+        this._quotes = userSnap.quotes;
+        this._photos = userSnap.photos;
+        this._interested = userSnap.interested;
+        this._match = userSnap.match;
     }
 
     async loginUser(){
@@ -93,8 +128,9 @@ export default class Profile{
         .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
+            this._userId = user.uid;
             // ...
-            console.log("Logged in", user);
+            console.log("Logged in", user, user.uid);
         })
         .catch((error) => {
             console.error(error);
@@ -114,7 +150,11 @@ export default class Profile{
 
     }
 
-    async changeUserPropertyInDatabase(properties){
+    async changeUserPropertyInDatabase(propertyName, properties){
+        await set(ref(this._db, 'Users/' + this._userId + "/" + propertyName), properties);
+    }
+
+    async addElementToArrayProperty(properties){
         await set(ref(this._db, 'Users/' + this._userId), properties);
     }
 
@@ -145,5 +185,43 @@ export default class Profile{
             console.log("Email not in use");
         }
         return inUse;
+    }
+
+    async setListenerPropertyOnChange(property, callBack){
+        const propRef = ref(this._db, this._userId + '/' + property);
+        onValue(propRef, (snapshot) => {
+            const data = snapshot.val();
+            switch(property) {
+                case "name":
+                  this._name = data;
+                  break;
+                case "location":
+                  this._location = data;
+                  break;
+                case "age":
+                    this._age = data;
+                    break;
+                case "pronouns":
+                    this._pronouns = data;
+                    break;
+                case "quotes":
+                    this._quotes = data;
+                    break;
+                case "photos":
+                    this._photos = data;
+                    break;
+                case "interested":
+                    this._interested = data;
+                    break;
+                case "match":
+                    this._match = data;
+                    break;
+                default:
+                  // Code to execute if expression does not match any case
+              }
+            if(callBack){
+                callBack(data);
+            }
+        });
     }
 }

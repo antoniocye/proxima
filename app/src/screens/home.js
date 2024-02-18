@@ -1,11 +1,36 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { View, Button, Text, Pressable, ImageBackground, FlatList, ScrollView } from 'react-native';
 import globalStyles from '../styles/globalStyles';
 import CustomButton from '../components/button';
 import AnimatedButton from '../components/button';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { GlobalUser } from '../../App';
+import { auth } from '../../database/Init';
+import Profile from '../../database/Profile';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 export default function HomeScreen({ navigation , onLayoutRootView}) {
+
+  const [myUser, setMyUser] = useContext(GlobalUser);
+
+  onAuthStateChanged(auth, async (user) => {
+    if(!user){
+      navigation.navigate("Choose Auth Method");
+    }
+    else{
+      if(!myUser){
+        let profile = new Profile({});
+        await profile.initProfile(flag = 'alr-in');
+        setMyUser(profile);
+      }
+    }
+
+    if(myUser){
+      await myUser.changeUserPropertyInDatabase("name", "antonio k");
+      await myUser.setListenerPropertyOnChange("name");
+    }
+  }); 
+
   return (
     <View style={globalStyles.backgroundImage} onLayout={onLayoutRootView}>
       <ImageBackground source={require('../../assets/img/background.png')} style={globalStyles.backgroundImage}>

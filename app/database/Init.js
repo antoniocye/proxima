@@ -1,6 +1,7 @@
 import {firebase, initializeApp} from 'firebase/app';
 import { getDatabase, ref, set } from 'firebase/database';
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, initializeAuth, onAuthStateChanged, setPersistence, getReactNativePersistence, inMemoryPersistence} from "firebase/auth";
+// import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 
 export let app, auth, db, user;
 export let initialized = false;
@@ -20,23 +21,20 @@ export const init = () => {
       };
 
     app = initializeApp(firebaseConfig);
-    auth = getAuth();
+    auth = initializeAuth(app, {
+        // persistence: getReactNativePersistence(ReactNativeAsyncStorage)
+    });
+    //console.log(auth, "auth in Init")
+
+    //setPersistence(auth, inMemoryPersistence);
+
     db = getDatabase();
 
     onAuthStateChanged(auth, (updated_user) => {
-        user = updated_user;    
-        console.log("Auth has changed:", user);
+        user = updated_user;
+        //console.log("Auth has changed:", user);
     });
 
     initialized = true;
-
     return "Hey";
-}
-
-function readData(){
-    const starCountRef = ref(db, 'users/');
-    onValue(starCountRef, (snapshot) => {
-    const data = snapshot.val();
-    updateStarCount(postElement, data);
-    });
 }

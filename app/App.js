@@ -11,7 +11,7 @@ import * as SplashScreen from 'expo-splash-screen';
 
 // db
 import Profile from './database/Profile.js';
-import { init, auth, db } from './database/Init.js'
+import { initialized, init, auth, db } from './database/Init.js'
 
 // screens
 import HomeScreen from './src/screens/home';
@@ -37,6 +37,7 @@ import OnboardingFirstPromptScreen from './src/screens/onboarding/onboardingFirs
 import OnboardingSecondPromptScreen from './src/screens/onboarding/onboardingSecondPrompt.js';
 import OnboardingThirdPromptScreen from './src/screens/onboarding/onboardingThirdPrompt.js';
 import OnboardingDoneScreen from './src/screens/onboarding/onboardingDone.js';
+import ChooseAuthMethodScreen from "./src/screens/chooseAuthMethod.js";
 
 import notifs from "./utils/notifs";
 import { navigationRef } from './utils/RootNavigation';
@@ -82,11 +83,9 @@ function App() {
     return null;
   }
 
-  for(i = 0; i < 5; i++){
-    console.log("----------------------------------------");
+  if(!initialized) {
+    init();
   }
-  
-  result = init();
 
   return (
 
@@ -100,6 +99,7 @@ function App() {
               <Stack.Screen name="Details" component={DetailsScreen} />
               <Stack.Screen name="Login" component={LoginScreen} />
               <Stack.Screen name="Sign Up" component={SignupScreen} />
+              <Stack.Screen name="Choose Auth Method" component={ChooseAuthMethodScreen} />
               <Stack.Screen name="Add Photos" component={AddPhotosScreen} />
               <Stack.Screen name="Camera" component={SelfieScreen} />
               <Stack.Screen name="Ping Start" component={PingStartScreen} />

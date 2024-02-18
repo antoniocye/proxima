@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ActivityIndicator, Text, ImageBackground, Image, SafeAreaView} from 'react-native';
+import { ActivityIndicator, Text, ImageBackground, Image, SafeAreaView, KeyboardAvoidingView, Platform} from 'react-native';
 import globalStyles from '../styles/globalStyles';
 import AnimatedButton from '../components/button';
 import TextField from '../components/textfield';
@@ -35,7 +35,7 @@ export default function SignupScreen({ navigation }) {
               result = await profile.initProfile("create");
               if(result === "user-create"){
                 setMyUser(profile);
-                navigation.navigate("Details");
+                navigation.navigate("Awaiting Verification");
               }
               else if(result == "user-exists"){
                 signInErrorAlert("This email is already in use. Try logging in!");
@@ -68,18 +68,29 @@ export default function SignupScreen({ navigation }) {
     <ImageBackground source={require('../../assets/img/background.png')} style={globalStyles.backgroundImage}>
       {!loading ? (
       <SafeAreaView style={globalStyles.container}>
-        {/* <Image source={require('../../assets/img/proxima-logo-dark.png')} style={globalStyles.logo}/> */}
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={globalStyles.keyboardAvoidingContainer}>
+
+        <Image source={require('../../assets/img/proxima-logo-dark.png')} style={globalStyles.logo}/>
         <Text style={globalStyles.heading}>create an account</Text>
         <TextField 
           placeholder="email" 
-          onChange={(e) => setEmail(e.nativeEvent.text)}/>
+          onChange = {(e) => setEmail()} 
+          keyboardType="email-address"
+        />
+
         <PasswordField 
           placeholder="password" 
-          onChange={(e) => setPassword(e.nativeEvent.text)}/>
+          onChange = {(e) => setPassword(e)}
+        />
+        
         <PasswordField 
           placeholder="confirm password" 
-          onChange={(e) => setConfPwd(e.nativeEvent.text)}/>
+          onChange = {(e) => setConfPwd(e)}
+        />
+    
+
         <AnimatedButton onPress={attemptSignIn} title="continue"/>
+        </KeyboardAvoidingView>
       </SafeAreaView>
       ) :
       (

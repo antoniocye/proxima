@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Text, ImageBackground, Image, SafeAreaView, ActivityIndicator } from 'react-native';
+import { Text, ImageBackground, Image, SafeAreaView, ActivityIndicator, KeyboardAvoidingView, Platform} from 'react-native';
 import globalStyles from '../styles/globalStyles';
 import AnimatedButton from '../components/button';
 import TextField from '../components/textfield';
@@ -59,20 +59,22 @@ export default function LoginScreen({ navigation }) {
     <ImageBackground source={require('../../assets/img/background.png')} style={globalStyles.backgroundImage}>
       {!loading ? (
         <SafeAreaView style={globalStyles.container}>
-          <Image source={require('../../assets/img/proxima-logo-dark.png')} style={globalStyles.logo}/>
-          <Text style={globalStyles.heading}>log in</Text>
-          <TextField 
-            placeholder="email" 
-            onChange = {(e) => setEmail(e.nativeEvent.text)} 
-            keyboardType="email-address"
-          />
+          <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={globalStyles.keyboardAvoidingContainer}>
+            <Image source={require('../../assets/img/proxima-logo-dark.png')} style={globalStyles.logo}/>
+            <Text style={globalStyles.heading}>log in</Text>
+            <TextField 
+              placeholder="email" 
+              onChange = {(e) => setEmail(e)} 
+              keyboardType="email-address"
+            />
 
-          <PasswordField 
-            placeholder="password" 
-            onChange = {(e) => setPassword(e.nativeEvent.text)}
-          />
+            <PasswordField 
+              placeholder="password" 
+              onChange = {(e) => setPassword()}
+            />
 
-          <AnimatedButton onPress={attemptLogin} title="continue"/>
+            <AnimatedButton onPress={attemptLogin} title="continue"/>    
+          </KeyboardAvoidingView>
         </SafeAreaView>
       ) : 
       (
