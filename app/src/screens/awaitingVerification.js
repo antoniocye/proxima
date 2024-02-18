@@ -15,7 +15,7 @@ export default function AwaitingVerificationScreen({ navigation }) {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if(count > 5){
+      if(count > 2){
         navigation.navigate("Home");
       }
       console.log(getAuth())

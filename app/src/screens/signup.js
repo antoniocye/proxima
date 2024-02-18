@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ActivityIndicator, Text, ImageBackground, Image, SafeAreaView} from 'react-native';
+import { ActivityIndicator, Text, ImageBackground, Image, SafeAreaView, View} from 'react-native';
 import globalStyles from '../styles/globalStyles';
 import AnimatedButton from '../components/button';
 import TextField from '../components/textfield';
@@ -73,13 +73,21 @@ export default function SignupScreen({ navigation }) {
         <Text style={globalStyles.heading}>create an account</Text>
         <TextField 
           placeholder="email" 
-          onChange={(e) => setEmail(e.nativeEvent.text)}/>
+          onChange = {(e) => setEmail()} 
+          keyboardType="email-address"
+        />
+
         <PasswordField 
           placeholder="password" 
-          onChange={(e) => setPassword(e.nativeEvent.text)}/>
+          onChange = {(e) => setPassword(e)}
+        />
+        
         <PasswordField 
           placeholder="confirm password" 
-          onChange={(e) => setConfPwd(e.nativeEvent.text)}/>
+          onChange = {(e) => setConfPwd(e)}
+        />
+    
+
         <AnimatedButton onPress={attemptSignIn} title="continue"/>
       </SafeAreaView>
       ) :

@@ -5,22 +5,45 @@ import CustomButton from '../components/button';
 import AnimatedButton from '../components/button';
 import PermissionsButton from '../../database/Location';
 import { GlobalUser } from '../../App';
+import { auth } from '../../database/Init';
+import Profile from '../../database/Profile';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 export default function HomeScreen({ navigation , onLayoutRootView}) {
   const [myUser, setMyUser] = useContext(GlobalUser);
 
-  useEffect(() => {
-      setInterval(async () => {
-        if(myUser){
-          await myUser.changeUserPropertyInDatabase("name", "tonyk");
-          await myUser.setListenerPropertyOnChange("name");
-          console.log(myUser);
-        }
-      }, 1000);
-      
-    }, []
-  )
-  
+  // function testDatabase(){
+  //   setInterval(async () => {
+  //     console.log("set interval");
+  //     if(myUser){
+  //       await myUser.changeUserPropertyInDatabase("name", count);
+  //       await myUser.setListenerPropertyOnChange("name");
+  //       console.log(myUser);
+  //     }
+  //     count++;
+  //   }, 10000);
+  // }
+
+
+  onAuthStateChanged(auth, async (user) => {
+    if(!user){
+      navigation.navigate("Choose Auth Method");
+    }
+    else{
+      if(!myUser){
+        let profile = new Profile({});
+        await profile.initProfile(flag = 'alr-in');
+        setMyUser(profile);
+      }
+    }
+
+    if(myUser){
+      await myUser.changeUserPropertyInDatabase("name", "antonio k");
+      await myUser.setListenerPropertyOnChange("name");
+    }
+  }); 
+
+
   return (
     <View style={globalStyles.backgroundImage} onLayout={onLayoutRootView}>
       <ImageBackground source={require('../../assets/img/background.png')} style={globalStyles.backgroundImage}>

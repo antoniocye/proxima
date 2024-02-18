@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Text, ImageBackground, Image, SafeAreaView, ActivityIndicator } from 'react-native';
+import { View, Text, ImageBackground, Image, SafeAreaView, ActivityIndicator } from 'react-native';
 import globalStyles from '../styles/globalStyles';
 import AnimatedButton from '../components/button';
 import TextField from '../components/textfield';
@@ -29,8 +29,11 @@ export default function LoginScreen({ navigation }) {
         if(isStanfordEmail(email)){
           setLoading(true);
           let profile = new Profile({email: email, password: password});
+          console.log("wegw")
           result = await profile.initProfile("login");
+          console.log("qkehge")
           if(result === "user-login"){
+            console.log("werkugheir")
             setMyUser(profile);
             navigation.navigate("Awaiting Verification");
           }
@@ -63,16 +66,16 @@ export default function LoginScreen({ navigation }) {
           <Text style={globalStyles.heading}>log in</Text>
           <TextField 
             placeholder="email" 
-            onChange = {(e) => setEmail(e.nativeEvent.text)} 
+            onChange = {(e) => setEmail(e)} 
             keyboardType="email-address"
           />
 
           <PasswordField 
             placeholder="password" 
-            onChange = {(e) => setPassword(e.nativeEvent.text)}
+            onChange = {(e) => setPassword()}
           />
 
-          <AnimatedButton onPress={attemptLogin} title="continue"/>
+            <AnimatedButton onPress={attemptLogin} title="continue"/>         
         </SafeAreaView>
       ) : 
       (

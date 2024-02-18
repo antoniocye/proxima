@@ -56,11 +56,11 @@ const PermissionsButton = () => {
 
     const requestPermissions = async () => {
         const { status: foregroundStatus } = await Location.requestForegroundPermissionsAsync();
-        console.log('f', foregroundStatus);
         const { status: backgroundStatus } = await Location.requestForegroundPermissionsAsync();
 
         if (foregroundStatus === 'granted' && backgroundStatus === 'granted') {
             setInterval(async () => {
+                // console.log("location stuff");
                 let curLoc = await Location.getCurrentPositionAsync({
                     accuracy: Location.Accuracy.Highest,
                     activityType: Location.ActivityType.Fitness,
@@ -78,9 +78,8 @@ const PermissionsButton = () => {
     
                     // If more than 1 meter away, update
                     setLoc(curLoc);
-                    console.log(myUser, "harvsine passed")
                     if(myUser){
-                        console.log("Updated", curLoc);
+                        console.log("Updated location to db");
 
                         myUser.changeUserPropertyInDatabase(
                             "location",
@@ -91,7 +90,7 @@ const PermissionsButton = () => {
                 else{
                     setLoc(curLoc);
                 }
-            }, 10000);
+            }, 5000);
 
 
             //const { status: backgroundStatus } = await Location.requestBackgroundPermissionsAsync();
@@ -115,10 +114,10 @@ const PermissionsButton = () => {
         }
     };
 
+    requestPermissions();
+
     return (
-        <View>
-            <Button onPress={requestPermissions} title="Enable background location" />
-        </View>
+        <></>
     )
 };
 

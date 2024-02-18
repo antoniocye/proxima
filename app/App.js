@@ -10,7 +10,7 @@ import * as SplashScreen from 'expo-splash-screen';
 
 // db
 import Profile from './database/Profile.js';
-import { init, auth, db } from './database/Init.js'
+import { initialized, init, auth, db } from './database/Init.js'
 
 // screens
 import HomeScreen from './src/screens/home';
@@ -26,6 +26,7 @@ import PingVerificationScreen from './src/screens/ping/pingVerification';
 import PingResultScreen from './src/screens/ping/pingResult';
 import PingWaitingScreen from './src/screens/ping/pingWaiting';
 import AwaitingVerificationScreen from './src/screens/awaitingVerification';
+import ChooseAuthMethod from './src/screens/chooseAuthMethod.js';
 
 
 const Stack = createNativeStackNavigator();
@@ -59,13 +60,15 @@ function App() {
     return null;
   }
 
-  for(i = 0; i < 5; i++){
-    console.log("---------------------------------------------------------------------");
+  
+  // for(i = 0; i < 5; i++){
+  //   console.log("---------------------------------------------------------------------");
+  // }
+  
+  if(!initialized){
+    init();
   }
   
-  result = init();
-
-  console.log("user at beginning", auth.currentUser);
 
   return (
 
@@ -75,6 +78,7 @@ function App() {
         <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
           <Stack.Screen name="Home" component={HomeScreen} options={onLayoutRootView}/>
           <Stack.Screen name="Details" component={DetailsScreen} />
+          <Stack.Screen name="Choose Auth Method" component={ChooseAuthMethod} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Sign Up" component={SignupScreen} />
           <Stack.Screen name="Add Photos" component={AddPhotosScreen} />

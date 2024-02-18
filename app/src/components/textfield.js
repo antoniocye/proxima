@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TextInput, View, StyleSheet } from 'react-native';
 import globalStyles from '../styles/globalStyles';
 
-const TextField = ({ placeholder, onSubmitEditing, onChange, keyboardType}) => {
+const TextField = ({ placeholder, onSubmitEditing, onChange, keyboardType, isPassword = false }) => {
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => setIsFocused(true);
@@ -12,9 +12,10 @@ const TextField = ({ placeholder, onSubmitEditing, onChange, keyboardType}) => {
     <TextInput
         placeholder={placeholder}
         onSubmitEditing={onSubmitEditing}
-        onChange={onChange}
+        onChangeText={onChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        secureTextEntry={isPassword}
         keyboardType={keyboardType}
         autoCapitalize='none'
         style={[

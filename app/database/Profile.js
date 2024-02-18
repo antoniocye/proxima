@@ -1,6 +1,6 @@
 import { auth, db, user } from './Init.js'
 import { get, ref, set, onValue } from 'firebase/database'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, signOut, onAuthStateChanged } from 'firebase/auth'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, signOut, onAuthStateChanged, getAuth } from 'firebase/auth'
 
 export default class Profile{
     // _biographical info
@@ -47,30 +47,33 @@ export default class Profile{
     */
 
     async initProfile(flag){
-        inUse = await this.emailInUse();
         let result;
 
-        if(inUse){
-            if((!flag || flag === "login") && !user){
-                await this.loginUser();
-                result = "user-login";
+        if(!(flag === "alr-in")){
+            inUse = await this.emailInUse();
+
+            if(inUse){
+                if((!flag || flag === "login") && !user){
+                    await this.loginUser();
+                    result = "user-login";
+                }
+                else if(user){
+                    result = "user-login";
+                }
+                else if(flag === "create"){
+                    result = "user-exists";
+                }
             }
-            else if(user){
-                result = "user-login";
+            else if((!flag || flag === "create") && this._password){
+                await this.createUser();
+                result = "user-create";
             }
-            else if(flag === "create"){
-                result = "user-exists";
+            else{
+                console.log('The password is empty');
+                result = "pwd-empty";
             }
         }
-        else if((!flag || flag === "create") && this._password){
-            await this.createUser();
-            result = "user-create";
-        }
-        else{
-            console.log('The password is empty');
-            result = "pwd-empty";
-        }
-        console.log("Final user object", user);
+        await this.fetchUserData();
         return result;
     }
 
@@ -92,6 +95,31 @@ export default class Profile{
         console.log("uid", this._userId);
         await this.changeUserPropertyInDatabase("email", this._email);
         await this.changeUserPropertyInDatabase("isVerified", false);
+    }
+
+
+    // we have a valid user object and will fetch the data, adding onValue callbacks at the same time
+    async fetchUserData(){
+        this._userId = getAuth().currentUser.uid;
+        let snapshot = await get(ref(this._db, "Users/" + this._userId));
+        userSnap = snapshot.val();
+        this.updateProperties(userSnap);
+        onValue(ref(this._db, "Users/" + this._userId), (snapshot) => {
+            userSnap = snapshot.val();
+            this.updateProperties(userSnap);
+        })
+    }
+
+    updateProperties(userSnap){
+        this._name = userSnap.name;
+        this._pronouns = userSnap.pronouns;
+        this._is_verified = userSnap.isVerified;
+        this._location = userSnap.location;
+        this._age = userSnap.age;
+        this._quotes = userSnap.quotes;
+        this._photos = userSnap.photos;
+        this._interested = userSnap.interested;
+        this._match = userSnap.match;
     }
 
     async loginUser(){

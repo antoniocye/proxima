@@ -15,9 +15,9 @@ const PasswordField = ({ placeholder, onSubmitEditing, onChange }) => {
             onFocus={handleFocus}
             autoCapitalize='none'
             secureTextEntry={true}
-            passwordRules={{ required: 'digit', minlength: '8' }}
+            // passwordRules={{ required: 'digit', minlength: '8' }}
             onBlur={handleBlur}
-            onChange={onChange}
+            onChangeText={onChange}
             style={[
                 globalStyles.input,
                 {  
