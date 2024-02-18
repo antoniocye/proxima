@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Button, Text, Pressable, ImageBackground } from 'react-native';
+import { View, Button, Text, Pressable, ImageBackground, FlatList, ScrollView } from 'react-native';
 import globalStyles from '../styles/globalStyles';
 import CustomButton from '../components/button';
 import AnimatedButton from '../components/button';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function HomeScreen({ navigation , onLayoutRootView}) {
   return (
@@ -18,6 +19,7 @@ export default function HomeScreen({ navigation , onLayoutRootView}) {
           <AnimatedButton title="take a selfie" onPress={() => navigation.navigate('Camera')} />
           <AnimatedButton title="ping" onPress={() => navigation.navigate('Ping Start', {user_id: "asanshay"})} />
           <AnimatedButton title="main profile page" onPress={() => navigation.navigate('Main')} />
+          <AnimatedButton title="onboard" onPress={() => navigation.navigate('Onboarding Name')} />
         </View>
       </ImageBackground>
 

@@ -24,7 +24,7 @@ export const init = () => {
     db = getDatabase();
 
     onAuthStateChanged(auth, (updated_user) => {
-        user = updated_user;
+        user = updated_user;    
         console.log("Auth has changed:", user);
     });
 

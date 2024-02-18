@@ -1,6 +1,6 @@
 import { auth, db, user } from './Init.js'
 import { get, ref, set } from 'firebase/database'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, signOut } from 'firebase/auth'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, signOut, onAuthStateChanged } from 'firebase/auth'
 
 export default class Profile{
     // _biographical info
@@ -11,7 +11,7 @@ export default class Profile{
     _name;
     _email;
     _password;
-    _is_verified;
+    _is_verified = false;
     _userId;
     _location;
 
@@ -20,6 +20,11 @@ export default class Profile{
         this._email = email;
         this._db = db;
         this._password = password;
+        onAuthStateChanged(auth, () => {
+            if(auth && auth.currentUser){
+                this._is_verified = auth.currentUser.emailVerified;
+            }
+        })
     }
 
     /* Flags:
@@ -52,6 +57,8 @@ export default class Profile{
             console.log('The password is empty');
             return "pwd-empty";
         }
+
+        // we init the localisation property
 
         console.log("Final user object", user);
     }
