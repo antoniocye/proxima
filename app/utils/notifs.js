@@ -42,11 +42,13 @@ function notifs() {
     
         // Handle user clicking on a notification and open the screen
         const handleNotificationClick = async (response) => {
+          
           const screen = response?.notification?.request?.content?.data?.screen;
           const user_id = response?.notification?.request?.content?.data?.user_id;
           if (screen !== null) {
+            console.log("11111");
             //navigation.navigate(screen);
-            RootNavigation.navigate(screen, user_id);
+            RootNavigation.navigate(screen, {user_id});
           }
         };
     
@@ -64,9 +66,13 @@ function notifs() {
             //navigationRef.current
           );
           if (remoteMessage?.data?.screen) {
-            console.log(remoteMessage.data.screen);
+            console.log("222222");
+            console.log(remoteMessage.data.user_id);
             //navigation.navigate(`${remoteMessage.data.screen}`);
-            RootNavigation.navigate(`${remoteMessage.data.screen}`, remoteMessage.data.user_id);
+            const screen = remoteMessage.data.screen;
+            const user_id = remoteMessage.data.user_id;
+
+            RootNavigation.navigate(screen, {user_id});          
           }
         });
     
@@ -80,8 +86,13 @@ function notifs() {
                 remoteMessage.notification
               );
               if (remoteMessage?.data?.screen) {
+                console.log("33333");
+                console.log(remoteMessage.data.user_id);
                 //navigation.navigate(`${remoteMessage.data.screen}`);
-                RootNavigation.navigate(`${remoteMessage.data.screen}`, remoteMessage.data.user_id);
+                const screen = remoteMessage.data.screen;
+                const user_id = remoteMessage.data.user_id;
+
+                RootNavigation.navigate(screen, {user_id});
               }
             }
           });
