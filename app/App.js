@@ -1,4 +1,7 @@
-import React, { useCallback, useState, createContext } from 'react';
+import { NavigationContainer } from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
+import React, { useState, useEffect, createRef,  useCallback, useState, createContext  } from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from '@react-navigation/native';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -27,6 +30,8 @@ import PingResultScreen from './src/screens/ping/pingResult';
 import PingWaitingScreen from './src/screens/ping/pingWaiting';
 import AwaitingVerificationScreen from './src/screens/awaitingVerification';
 
+import notifs from "./utils/notifs";
+import { navigationRef } from './utils/RootNavigation';
 
 const Stack = createNativeStackNavigator();
 
@@ -41,6 +46,8 @@ export const GlobalUser = createContext();
 
 
 function App() {
+  notifs()
+  
   const [myUser, setMyUser] = useState();
 
   const [fontsLoaded, fontError] = useFonts({
@@ -68,7 +75,7 @@ function App() {
 
     <GlobalUser.Provider value={[ myUser, setMyUser ] }>
     {
-      <NavigationContainer>
+      <NavigationContainer ref={navigationRef}r>
         <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
           <Stack.Screen name="Home" component={HomeScreen} options={onLayoutRootView}/>
           <Stack.Screen name="Details" component={DetailsScreen} />
@@ -94,9 +101,9 @@ function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 
