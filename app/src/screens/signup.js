@@ -35,7 +35,8 @@ export default function SignupScreen({ navigation }) {
               result = await profile.initProfile("create");
               if(result === "user-create"){
                 setMyUser(profile);
-                navigation.navigate("Details");
+                console.log("uw3i4gberlnwihukyrgrehiwk", profile);
+                navigation.navigate("Awaiting Verification");
               }
               else if(result == "user-exists"){
                 signInErrorAlert("This email is already in use. Try logging in!");

@@ -65,12 +65,13 @@ function App() {
   
   result = init();
 
+  console.log("user at beginning", auth.currentUser);
+
   return (
 
     <GlobalUser.Provider value={[ myUser, setMyUser ] }>
     {
       <NavigationContainer>
-        <BackgroundLocationService />
         <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
           <Stack.Screen name="Home" component={HomeScreen} options={onLayoutRootView}/>
           <Stack.Screen name="Details" component={DetailsScreen} />

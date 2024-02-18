@@ -29,7 +29,6 @@ export const init = () => {
     });
 
     initialized = true;
-
     return "Hey";
 }
 

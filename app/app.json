@@ -17,14 +17,21 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "UIBackgroundModes": ["location, fetch"]
-      }
+        "UIBackgroundModes": [
+          "location"
+        ]
+      },
+      "bundleIdentifier": "com.proxima.app"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.proxima.app"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -33,9 +40,12 @@
       [
         "expo-font",
         {
-          "fonts": ["./assets/fonts/GeneralSans-Medium.otf", "./assets/fonts/GeneralSans-Semibold.otf"]
+          "fonts": [
+            "./assets/fonts/GeneralSans-Medium.otf",
+            "./assets/fonts/GeneralSans-Semibold.otf"
+          ]
         }
-      ], 
+      ],
       [
         "expo-image-picker",
         {
