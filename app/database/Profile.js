@@ -1,6 +1,7 @@
 import { auth, db, user } from './Init.js'
 import { get, ref, set } from 'firebase/database'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, signOut, onAuthStateChanged } from 'firebase/auth'
+import { getTokenForDatabase } from '../utils/notifs.js';
 
 export default class Profile{
     // _biographical info
@@ -13,6 +14,7 @@ export default class Profile{
     _password;
     _is_verified = false;
     _userId;
+    _notifId;
     _location;
 
     constructor({name, email, password}){
@@ -35,7 +37,7 @@ export default class Profile{
 
     async initProfile(flag){
         inUse = await this.emailInUse();
-
+        this._notifId = getTokenForDatabase();
         if(inUse){
             if((!flag || flag === "login") && !user){
                 console.log("We need to login the user")

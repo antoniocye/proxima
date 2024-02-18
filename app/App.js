@@ -59,7 +59,9 @@ export const GlobalUser = createContext();
 
 
 function App() {
-  notifs()
+  useEffect
+
+  notifs();
   
   const [myUser, setMyUser] = useState();
 

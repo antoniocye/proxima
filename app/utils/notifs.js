@@ -3,17 +3,26 @@ import messaging from "@react-native-firebase/messaging";
 import * as Notifications from 'expo-notifications';
 import * as RootNavigation from './RootNavigation.js';
 
+const requestUserPermission = async () => {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+    if (enabled) {
+      console.log("Authorization status:", authStatus);
+    }
+};
+
+export function getTokenForDatabase(){
+    if (requestUserPermission()) {
+        messaging()
+          .getToken()
+          .then((token) => {return token});
+    }
+}
+
 function notifs() {
-    const requestUserPermission = async () => {
-        const authStatus = await messaging().requestPermission();
-        const enabled =
-          authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-          authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-    
-        if (enabled) {
-          console.log("Authorization status:", authStatus);
-        }
-    };
     
     useEffect(() => {
         if (requestUserPermission()) {
