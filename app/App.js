@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-
+import PermissionsButton from "./database/Location.js"
 // expo
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen'; 
@@ -96,6 +96,7 @@ function App() {
       <Profiles.Provider value={[ database, setProfiles ]}>
         {
           <NavigationContainer ref={navigationRef}r>
+            <PermissionsButton/>
             <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
               <Stack.Screen name="Home" component={HomeScreen} options={onLayoutRootView}/>
               <Stack.Screen name="Details" component={DetailsScreen} />

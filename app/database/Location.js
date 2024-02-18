@@ -1,11 +1,9 @@
 import { GlobalUser } from '../App';
 import { useContext, useState } from 'react';
 import * as Location from 'expo-location';
-import * as TaskManager from 'expo-task-manager';
 import React from 'react';
 import { Button, View, StyleSheet } from 'react-native';
 
-const haversine = require('haversine');``
 const TASK_FETCH_LOCATION = 'TASK_FETCH_LOCATION';
 
 
@@ -94,7 +92,7 @@ const PermissionsButton = () => {
 
 
             //const { status: backgroundStatus } = await Location.requestBackgroundPermissionsAsync();
-            //console.log('b', backgroundStatus);
+            //console.log('b', backgroundStatu s);
             //if (backgroundStatus === 'granted') {
                 
                

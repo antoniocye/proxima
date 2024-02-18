@@ -32,7 +32,7 @@ export default function SignupScreen({ navigation }) {
 
               setLoading(true);
               let profile = new Profile({email: email, password: password});
-              result = await profile.initProfile("create");
+              [result, returnTo] = await profile.initProfile("create");
               if(result === "user-create"){
                 setMyUser(profile);
                 navigation.navigate("Awaiting Verification");

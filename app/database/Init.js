@@ -1,7 +1,7 @@
 import {firebase, initializeApp} from 'firebase/app';
 import { getDatabase, ref, set } from 'firebase/database';
 import { getAuth, initializeAuth, onAuthStateChanged, setPersistence, getReactNativePersistence, inMemoryPersistence} from "firebase/auth";
-// import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 
 export let app, auth, db, user;
 export let initialized = false;
@@ -22,7 +22,7 @@ export const init = () => {
 
     app = initializeApp(firebaseConfig);
     auth = initializeAuth(app, {
-        // persistence: getReactNativePersistence(ReactNativeAsyncStorage)
+        persistence: getReactNativePersistence(ReactNativeAsyncStorage)
     });
     //console.log(auth, "auth in Init")
 
