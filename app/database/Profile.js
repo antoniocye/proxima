@@ -79,7 +79,6 @@ export default class Profile{
             inUse = await this.emailInUse();
 
             if(inUse){
-                returnTo = "Home";
                 if((!flag || flag === "login") && !user){
                     await this.loginUser();
                     result = "user-login";
@@ -138,14 +137,14 @@ export default class Profile{
         let snapshot = await get(ref(this._db, "Users/" + this._userId));
         userSnap = snapshot.val();
         this.updateProperties(userSnap);
-        onValue(ref(this._db, "Users/" + this._userId), (snapshot) => {
+        onValue(ref(this._db, "Users/" + this._userId), async (snapshot) => {
             userSnap = snapshot.val();
-            this.updateProperties(userSnap);
+            await this.updateProperties(userSnap);
         })
         console.log("Done fetching user data");
     }
 
-    updateProperties(userSnap){
+    async updateProperties(userSnap){
         this._name = userSnap.name;
         this._pronouns = userSnap.pronouns;
         this._is_verified = userSnap.isVerified;
@@ -155,7 +154,14 @@ export default class Profile{
         this._photos = userSnap.photos;
         this._interested = userSnap.interested;
         this._match = userSnap.match;
-        this._onbStep = userSnap.onbStep;
+        if(userSnap.onbStep){
+            this._onbStep = userSnap.onbStep;
+        }
+        else{
+            this._onbStep = "Choose Auth Method";
+            await this.changeUserPropertyInDatabase("onbStep", this._onbStep);
+        }
+        
     }
 
     async loginUser(){

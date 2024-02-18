@@ -88,7 +88,7 @@ const PermissionsButton = () => {
                 else{
                     setLoc(curLoc);
                 }
-            }, 5000);
+            }, 30000);
 
 
             //const { status: backgroundStatus } = await Location.requestBackgroundPermissionsAsync();

@@ -14,7 +14,7 @@ export default function AwaitingVerificationScreen({ navigation }) {
   let count = 0;
 
   useEffect(() => {
-    myUser.changeUserPropertyInDatabase("onbStep", "Onboarding Name");
+    // myUser.changeUserPropertyInDatabase("onbStep", "Onboarding Name");
     let returnTo = "Onboarding Name";
 
     const interval = setInterval(() => {
