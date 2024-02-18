@@ -21,6 +21,7 @@
     },
     "android": {
       "googleServicesFile": "./google-services.json",
+      
       "package": "com.proxima.dev",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
@@ -34,6 +35,7 @@
       "expo-font",
       "@react-native-firebase/app",
       "@react-native-firebase/messaging",
+      ["./utils/android-manifest-launch-mode-plugin"],
       [
         "expo-build-properties",
         {
