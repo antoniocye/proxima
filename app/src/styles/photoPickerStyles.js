@@ -2,8 +2,8 @@ import globalStyles from "./globalStyles";
 
 const photoPickerStyles = {
   photoPicker: {
-    minWidth: '40%',
-    maxWidth: '40%',
+    minWidth: '70%',
+    maxWidth: '70%',
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 2,
@@ -14,8 +14,8 @@ const photoPickerStyles = {
   },
 
   photoPickerImage: {
-    width: 200, 
-    height: 200, 
+    width: 350, 
+    height: 350, 
     resizeMode: "cover",
   },
 
@@ -28,6 +28,7 @@ const photoPickerStyles = {
 
   photoPickerRow: {
     flexDirection: 'row',
+    justifyContent: 'space-evenly',
     gap: '30%',
     marginVertical: 10,
   },

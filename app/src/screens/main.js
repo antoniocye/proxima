@@ -8,49 +8,17 @@ import CaptionImage from '../components/captionImage';
 
 import { GestureHandlerRootView, Gesture, GestureDetector, Directions } from 'react-native-gesture-handler';
 import { runOnJS } from 'react-native-reanimated';
+import {getProfiles} from '../profiles';
 
-var profiles = [
-  {
-    name: "Tanvir", 
-    age: 18, 
-    pronouns: "he/him", 
-    photos: [
-      {uri: require("../../assets/example-profile-1/image-1.jpeg"), caption: "brown munde"}, 
-      {uri: require("../../assets/example-profile-1/image-2.jpeg"), caption: "big pregame guy"},
-      {uri: require("../../assets/example-profile-1/image-3.jpeg"), caption: "am i a good dancer?"},
-    ], 
-    quotes: ["i only date punjabi girls.  i’m the real brown munde", "i don’t live in la hoya. i’m just from the poor part of san diego"],
-  },
-  {
-    name: "Josh", 
-    age: 13, 
-    pronouns: "him", 
-    photos: [
-      {uri: require("../../assets/example-profile-2/image-1.jpeg"), caption: "brown munde"}, 
-      {uri: require("../../assets/example-profile-2/image-2.jpg"), caption: "i'm basically jeremy lin"},
-      {uri: require("../../assets/example-profile-2/image-3.jpeg"), caption: "didn't ask for this birthday party"},
-    ], 
-    quotes: ["i talk to females every day", "math 61 was the easiest class i’ve ever taken"],
-  },
-  {
-    name: "Andres", 
-    age: 18, 
-    pronouns: "he/him", 
-    photos: [
-      {uri: require("../../assets/example-profile-3/image-1.jpg"), caption: "brown munde"}, 
-      {uri: require("../../assets/example-profile-3/image-2.jpeg"), caption: "point five"},
-      {uri: require("../../assets/example-profile-3/image-3.jpeg"), caption: "hacker mode initiated"},
-    ], 
-    quotes: ["i do cool guy things like play league of legends", "you wouldn't believe it, but i have a girlfriend"],
-  }
-];
 
 export default function MainScreen({ navigation }) {
-  
+
+  let profiles = getProfiles();
 
   const [i, setI] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [profile, setProfile] = useState('');
+  // console.log(profiles);
 
   // placeholder function
   async function waitForThreeSeconds() {
@@ -80,9 +48,8 @@ export default function MainScreen({ navigation }) {
 
 const updateProfilesArray = (updatedProfile) => {
   // Update the profiles array with the new profile data
-  profiles[(i - 1) % profiles.length] = updatedProfile; // Directly updating the array for demonstration; consider state management practices
-  console.log(profiles);
-  console.log(i);
+  // console.log(profiles);
+  // console.log(i);
 };
 
   const swipeLeft = Gesture.Fling()
@@ -113,7 +80,7 @@ const updateProfilesArray = (updatedProfile) => {
 
   return (
     <GestureHandlerRootView style={[globalStyles.backgroundImage]}>
-      <GestureDetector gesture={swipeLeft}>
+      <GestureDetector gesture={composed}>
         <ImageBackground source={require('../../assets/img/background.png')} style={globalStyles.backgroundImage}>
           <SafeAreaView/>
             {!isLoading ? <ScrollView>

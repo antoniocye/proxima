@@ -17,9 +17,9 @@ export default function HomeScreen({ navigation , onLayoutRootView}) {
             <AnimatedButton title="details" onPress={() => navigation.navigate('Details')} />
             <AnimatedButton title="login" onPress={() => navigation.navigate('Login')} />
             <AnimatedButton title="sign up" onPress={() => navigation.navigate('Sign Up')} />
-            <AnimatedButton title="add photos" onPress={() => navigation.navigate('Add Photos')} />
+            <AnimatedButton title="add photos" onPress={() => navigation.navigate('Add Photos', {name: 'Josh'})} />
             <AnimatedButton title="take a selfie" onPress={() => navigation.navigate('Camera')} />
-            <AnimatedButton title="ping" onPress={() => navigation.navigate('Ping Start', {user_id: "asanshay"})} />
+            <AnimatedButton title="ping" onPress={() => navigation.navigate('Ping Start', {user_id: "Tanvir"})} />
             <AnimatedButton title="main profile page" onPress={() => navigation.navigate('Main')} />
             <AnimatedButton title="onboard" onPress={() => navigation.navigate('Onboarding Name')} />
           </ScrollView>

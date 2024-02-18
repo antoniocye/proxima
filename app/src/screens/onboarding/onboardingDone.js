@@ -8,9 +8,9 @@ export default function OnboardingDoneScreen({ navigation }) {
   return (
     <ImageBackground source={require('../../../assets/img/background.png')} style={globalStyles.backgroundImage}>
       <SafeAreaView style={[globalStyles.container, {justifyContent:'flex-start'}]}>
-        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={globalStyles.keyboardAvoidingContainer}>
-          <Text style={globalStyles.heading}>Done with onboarding!</Text>
-        </KeyboardAvoidingView>
+        <Image source={require('../../../assets/img/proxima-logo-dark.png')} style={globalStyles.logo}/>
+        <Text style={globalStyles.heading}>welcome to proxima!</Text>
+        <AnimatedButton title="awesome!" onPress={() => navigation.navigate('Main')} />
       </SafeAreaView>
     </ImageBackground>
   );

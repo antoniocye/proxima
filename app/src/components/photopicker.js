@@ -4,7 +4,7 @@ import * as ImagePicker from 'expo-image-picker';
 import globalStyles from '../styles/globalStyles';
 import photoPickerStyles from '../styles/photoPickerStyles';
 
-export default function PhotoPicker({name}) {
+export default function PhotoPicker({afterPhotoSelected}) {
   const [image, setImage] = useState(null);
 
   const pickImage = async () => {
@@ -16,7 +16,8 @@ export default function PhotoPicker({name}) {
       quality: 1,
     });
 
-    console.log(result);
+    // console.log(result.assets[0].uri);
+    afterPhotoSelected(result.assets[0].uri);
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);

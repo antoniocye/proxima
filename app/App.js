@@ -40,6 +40,7 @@ import OnboardingDoneScreen from './src/screens/onboarding/onboardingDone.js';
 
 import notifs from "./utils/notifs";
 import { navigationRef } from './utils/RootNavigation';
+import profiles from './src/profiles.js';
 
 // styles
 import globalStyles from './src/styles/globalStyles.js';
@@ -56,10 +57,12 @@ SplashScreen.preventAutoHideAsync(); // prevent the splash screen from auto-hidi
  */
 
 export const GlobalUser = createContext();
-
+export const Profiles = createContext();
 
 function App() {
 
+  const [database, setProfiles] = useState([]);
+  // setProfiles(profiles);
   notifs();
   
   const [myUser, setMyUser] = useState();
@@ -89,34 +92,38 @@ function App() {
 
     <GlobalUser.Provider value={[ myUser, setMyUser ] }>
     {
-      <NavigationContainer ref={navigationRef}r>
-        <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
-          <Stack.Screen name="Home" component={HomeScreen} options={onLayoutRootView}/>
-          <Stack.Screen name="Details" component={DetailsScreen} />
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Sign Up" component={SignupScreen} />
-          <Stack.Screen name="Add Photos" component={AddPhotosScreen} />
-          <Stack.Screen name="Camera" component={SelfieScreen} />
-          <Stack.Screen name="Ping Start" component={PingStartScreen} />
-          <Stack.Screen name="Ping Decision" component={PingDecisionScreen} />
-          <Stack.Screen name="Ping Declined" component={PingDeclinedScreen} />
-          <Stack.Screen name="Ping Verification" component={PingVerificationScreen} />
-          <Stack.Screen name="Ping Waiting" component={PingWaitingScreen} />
-          <Stack.Screen name="Ping Result" component={PingResultScreen} />
-          <Stack.Screen name="Awaiting Verification" component={AwaitingVerificationScreen} />
-          <Stack.Screen name="Main" component={MainScreen} />
+      <Profiles.Provider value={[ database, setProfiles ]}>
+        {
+          <NavigationContainer ref={navigationRef}r>
+            <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
+              <Stack.Screen name="Home" component={HomeScreen} options={onLayoutRootView}/>
+              <Stack.Screen name="Details" component={DetailsScreen} />
+              <Stack.Screen name="Login" component={LoginScreen} />
+              <Stack.Screen name="Sign Up" component={SignupScreen} />
+              <Stack.Screen name="Add Photos" component={AddPhotosScreen} />
+              <Stack.Screen name="Camera" component={SelfieScreen} />
+              <Stack.Screen name="Ping Start" component={PingStartScreen} />
+              <Stack.Screen name="Ping Decision" component={PingDecisionScreen} />
+              <Stack.Screen name="Ping Declined" component={PingDeclinedScreen} />
+              <Stack.Screen name="Ping Verification" component={PingVerificationScreen} />
+              <Stack.Screen name="Ping Waiting" component={PingWaitingScreen} />
+              <Stack.Screen name="Ping Result" component={PingResultScreen} />
+              <Stack.Screen name="Awaiting Verification" component={AwaitingVerificationScreen} />
+              <Stack.Screen name="Main" component={MainScreen} />
 
-          <Stack.Screen name="Onboarding Name" component={OnboardingNameScreen} />
-          <Stack.Screen name="Onboarding Age" component={OnboardingAgeScreen} />
-          <Stack.Screen name="Onboarding School" component={OnboardingSchoolScreen} />
-          <Stack.Screen name="Onboarding Preferred Gender" component={OnboardingPreferredGenderScreen} />
-          <Stack.Screen name="Onboarding Passions" component={OnboardingPassionsScreen} />
-          <Stack.Screen name="Onboarding First Prompt" component={OnboardingFirstPromptScreen} />
-          <Stack.Screen name="Onboarding Second Prompt" component={OnboardingSecondPromptScreen} />
-          <Stack.Screen name="Onboarding Third Prompt" component={OnboardingThirdPromptScreen} />
-          <Stack.Screen name="Onboarding Done" component={OnboardingDoneScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
+              <Stack.Screen name="Onboarding Name" component={OnboardingNameScreen} />
+              <Stack.Screen name="Onboarding Age" component={OnboardingAgeScreen} />
+              <Stack.Screen name="Onboarding School" component={OnboardingSchoolScreen} />
+              <Stack.Screen name="Onboarding Preferred Gender" component={OnboardingPreferredGenderScreen} />
+              <Stack.Screen name="Onboarding Passions" component={OnboardingPassionsScreen} />
+              <Stack.Screen name="Onboarding First Prompt" component={OnboardingFirstPromptScreen} />
+              <Stack.Screen name="Onboarding Second Prompt" component={OnboardingSecondPromptScreen} />
+              <Stack.Screen name="Onboarding Third Prompt" component={OnboardingThirdPromptScreen} />
+              <Stack.Screen name="Onboarding Done" component={OnboardingDoneScreen} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        }
+      </Profiles.Provider>
     }
   </GlobalUser.Provider>
     
