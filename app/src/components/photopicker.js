@@ -4,7 +4,7 @@ import * as ImagePicker from 'expo-image-picker';
 import globalStyles from '../styles/globalStyles';
 import photoPickerStyles from '../styles/photoPickerStyles';
 
-export default function PhotoPicker() {
+export default function PhotoPicker({name}) {
   const [image, setImage] = useState(null);
 
   const pickImage = async () => {

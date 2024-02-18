@@ -3,7 +3,7 @@ import React, { useState, useEffect, createRef,  useCallback, createContext  } f
 import { NavigationContainer } from '@react-navigation/native';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 // expo
 import { useFonts } from 'expo-font';
@@ -27,6 +27,7 @@ import PingVerificationScreen from './src/screens/ping/pingVerification';
 import PingResultScreen from './src/screens/ping/pingResult';
 import PingWaitingScreen from './src/screens/ping/pingWaiting';
 import AwaitingVerificationScreen from './src/screens/awaitingVerification';
+import MainScreen from './src/screens/main.js';
 import OnboardingNameScreen from './src/screens/onboarding/onboardingName.js';
 import OnboardingAgeScreen from './src/screens/onboarding/onboardingAge.js';
 import OnboardingSchoolScreen from './src/screens/onboarding/onboardingSchool.js';
@@ -39,6 +40,11 @@ import OnboardingDoneScreen from './src/screens/onboarding/onboardingDone.js';
 
 import notifs from "./utils/notifs";
 import { navigationRef } from './utils/RootNavigation';
+
+// styles
+import globalStyles from './src/styles/globalStyles.js';
+
+
 
 const Stack = createNativeStackNavigator();
 
@@ -97,6 +103,7 @@ function App() {
           <Stack.Screen name="Ping Waiting" component={PingWaitingScreen} />
           <Stack.Screen name="Ping Result" component={PingResultScreen} />
           <Stack.Screen name="Awaiting Verification" component={AwaitingVerificationScreen} />
+          <Stack.Screen name="Main" component={MainScreen} />
 
           <Stack.Screen name="Onboarding Name" component={OnboardingNameScreen} />
           <Stack.Screen name="Onboarding Age" component={OnboardingAgeScreen} />
