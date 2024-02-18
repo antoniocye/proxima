@@ -8,7 +8,7 @@
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
@@ -32,7 +32,6 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-font",
       "@react-native-firebase/app",
       "@react-native-firebase/messaging",
       ["./utils/android-manifest-launch-mode-plugin"],
@@ -42,6 +41,18 @@
           "ios": {
             "useFrameworks": "static"
           }
+        }
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": ["./assets/fonts/GeneralSans-Medium.otf", "./assets/fonts/GeneralSans-Semibold.otf"]
+        }
+      ], 
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
       ]
     ],
