@@ -147,6 +147,8 @@ const globalStyles = {
   // Containers
   keyboardAvoidingContainer: {
     alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
   },
 
 };
