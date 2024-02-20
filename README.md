@@ -1,15 +1,4 @@
 # proxima
 Bringing back spontaneous romance.
 
-## Dependencies
-- Firebase, run as admin, under \app
-`npm install -g firebase-tools`
-`npm install firebase`
-- Navigation
-`npm install @react-navigation/native`
-
-## When adding a page follow these 3 steps
-
-1. Add screen page to `src/screens` 
-2. Add navigation route to `App.js` - **make sure to import it properly**
-3. Add a button to `home.js` that links to the page for easy development.
+Click [here]([url](https://devpost.com/software/proxima-yl9zib?ref_content=my-projects-tab&ref_feature=my_projects)) for the Devpost.
